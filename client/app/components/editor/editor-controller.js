@@ -2,11 +2,22 @@
 
     function EditorController($scope, $filter) {
 
+        $scope.datasetString = '';
         $scope.dataset = [
             {
                 'day': '2013-01-02_00:00:00',
-                'sales': 13461.295202,
+                'sales': 3461.295202,
                 'income': 12365.053
+            },
+            {
+                'day': '2013-01-03_00:00:00',
+                'sales': 4461.295202,
+                'income': 13365.053
+            },
+            {
+                'day': '2013-01-04_00:00:00',
+                'sales': 4561.295202,
+                'income': 14365.053
             }
         ];
 
@@ -41,6 +52,15 @@
             }
         };
 
+        $scope.datasetAceConfig = {
+            mode: 'json',
+            useWrapMode: false,
+            onLoad: function(_editor) {
+                _editor.setShowPrintMargin(false);
+            }
+        };
+
+
         $scope.$watch('options', function(json) {
             $scope.optionsString = $filter('json')(json);
         }, true);
@@ -48,9 +68,22 @@
         $scope.$watch('optionsString', function(json) {
             try {
                 $scope.options = JSON.parse(json);
-                $scope.wellFormed = true;
+                $scope.wellFormedOptions = true;
             } catch (e) {
-                $scope.wellFormed = false;
+                $scope.wellFormedOptions = false;
+            }
+        }, true);
+
+        $scope.$watch('dataset', function(json) {
+            $scope.datasetString = $filter('json')(json);
+        }, true);
+
+        $scope.$watch('datasetString', function(json) {
+            try {
+                $scope.dataset = JSON.parse(json);
+                $scope.wellFormedDataset = true;
+            } catch (e) {
+                $scope.wellFormedDataset = false;
             }
         }, true);
 

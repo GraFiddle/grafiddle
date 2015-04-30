@@ -14,7 +14,7 @@
     <div ui-layout-container>
         <div ui-layout="{flow : 'column'}" >
             <div ui-layout-container class="">
-                {{dataset}}
+                <div ng-model="datasetString" ui-ace="datasetAceConfig"></div>
             </div>
             <div ui-layout-container class="">
                 <div ng-model="optionsString" ui-ace="optionsAceConfig"></div>

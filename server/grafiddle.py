@@ -28,15 +28,19 @@ def create_checkpoint():
                             options=request.json['options'],
                             author=request.json['author'])
     checkpoint.put()
-    # checkpoint.date = checkpoint.date.isoformat()
     result = checkpoint.to_dict()
     result['id'] = checkpoint.key.id()
+    result['date'] = checkpoint.date.isoformat()
     return jsonify(result)
 
 
-@app.route('/checkpoint', methods=['GET'])
-def get_checkpoint():
-    return 'Hello 432!'
+@app.route('/checkpoint/<int:id>', methods=['GET'])
+def get_checkpoint(id):
+    # checkpoint = Checkpoint(id=5071522616049664)
+    # c = checkpoint.get_by_id()
+    # print c
+    # return jsonify(c)
+    return "requested id is %s" % id
 
 
 @app.errorhandler(404)

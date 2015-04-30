@@ -5,6 +5,39 @@
 
 
 /**
+  Embed View
+*************************************/
+
+div.embedview {
+  width: 100%;
+  height: 300px;
+  border: 1px solid black;
+  padding: 0;
+  clear: both;
+}
+
+ul.embedview {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+li.embedview {
+    float: left;
+    border: 1px solid #000;
+    border-bottom-width: 0;
+    margin: 3px 3px 0px 3px;
+    padding: 5px 5px 0px 5px;
+    background-color: #CCC;
+    color: #696969;
+}
+.embedview .active {
+    background-color: #FFF;
+    color: #000;
+}
+
+
+
+/**
   Ace Editor
 *************************************/
 

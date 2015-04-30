@@ -1,0 +1,22 @@
+<div>
+    <div>
+        Top / Tab bar
+    </div>
+
+    <div ng-show="embedView == 'chart'">
+        <angularchart
+            dataset="dataset"
+            schema="schema"
+            options="options">
+        </angularchart>
+    </div>
+
+    <div ng-show="embedView == 'options'">
+        <div ng-model="optionsString" ui-ace="optionsAceConfig"></div>
+    </div>
+
+    <div ng-show="embedView == 'dataset'">
+        <div ng-model="datasetString" ui-ace="datasetAceConfig"></div>
+    </div>
+
+</div>

@@ -20,7 +20,11 @@
   },
   "overrides": {
     "ace-builds": {
-      "main": "./src/ace.js"
+      "main": [
+        "./src/ace.js",
+        "./src/mode-json.js",
+        "./src/worker-json.js"
+      ]
     }
   }
 }

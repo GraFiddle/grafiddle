@@ -4,16 +4,20 @@
     </div>
 
     <div ui-layout-container class="" >
-        Chart
+        <angularchart
+            dataset="dataset"
+            schema="schema"
+            options="options">
+        </angularchart>
     </div>
 
     <div ui-layout-container>
         <div ui-layout="{flow : 'column'}" >
             <div ui-layout-container class="">
-                Data
+                {{dataset}}
             </div>
             <div ui-layout-container class="">
-                <div ui-ace></div>
+                <div ng-model="optionsString" ui-ace="optionsAceConfig"></div>
             </div>
         </div>
     </div>

@@ -14,6 +14,11 @@
                 })
         };
 
+        $scope.uploadFile = function(file) {
+            $scope.datasetString = file;
+            $scope.toggleInputEditor();
+        };
+
         $scope.dataEditorHidden = true;
         $scope.dataInputHidden = false;
         $scope.SwitchButtonTitle = 'Manual data entry';

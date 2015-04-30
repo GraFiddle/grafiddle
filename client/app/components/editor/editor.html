@@ -24,7 +24,7 @@
                 <div style="position: absolute; top: 10px; right: 10px; z-index: 999;"><button ng-click="toggleInputEditor()">{{SwitchButtonTitle}}</button></div>
                 <div ng-hide="dataInputHidden">
                     <div>
-                        <input type="file" on-read-file="displayFileContents(contents)" /><br/>
+                        <input type="file" on-read-file="uploadFile($fileContent)"><br/>
                     </div>
                     <div>
                         Enter URL to your data: <input type="text" ng-model="dataURL"> <button ng-click="loadfromURL()">Get!</button>

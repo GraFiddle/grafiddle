@@ -1,6 +1,6 @@
 (function () {
 
-    function EditorController($scope, $filter, CheckpointEndpoint) {
+    function EditorController($scope, $filter, $state, $location, CheckpointEndpoint) {
 
         $scope.showDataEditor = false;
         $scope.showOptionsUI  = false;
@@ -27,13 +27,27 @@
         ////////////
 
         function activate() {
-            loadDefaultData();
+
+            if ($state.params.id) {
+                CheckpointEndpoint
+                    .get({id: $state.params.id})
+                    .$promise
+                    .then(function(checkpoint) {
+                        $scope.serverCheckpoint = checkpoint;
+                        setCheckpoint(checkpoint);
+                    })
+                    .catch(function(){
+                        $state.go('editor', {id: ''});
+                    });
+            } else {
+                loadDefaultData();
+            }
             syncOptions();
             syncDataset();
             updateOnResize();
         }
 
-        // Save the current verion
+        // Save the current Version
         //
         function save() {
             CheckpointEndpoint.save({
@@ -44,6 +58,10 @@
                 .$promise
                 .then(function (checkpoint) {
                     console.log('saved checkpoint: ', checkpoint);
+                    $state.go('editor', {id: checkpoint.id});
+                })
+                .catch(function (e) {
+                    console.error('save failed', e);
                 })
         }
 
@@ -120,6 +138,15 @@
             $scope.checkpoint.schema = schema;
             $scope.checkpoint.optionsString = '';
             $scope.checkpoint.options = options;
+        }
+
+        function setCheckpoint(checkpoint) {
+            $scope.checkpoint.datasetString = '';
+            $scope.checkpoint.dataset = checkpoint.data;
+            $scope.checkpoint.schemaString = '';
+            $scope.checkpoint.schema = {};
+            $scope.checkpoint.optionsString = '';
+            $scope.checkpoint.options = checkpoint.options;
         }
 
         // Sync Object and String representation

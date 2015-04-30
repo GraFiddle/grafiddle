@@ -65,6 +65,7 @@
             useWrapMode: false,
             onLoad: function(_editor) {
                 _editor.setShowPrintMargin(false);
+                _editor.$blockScrolling = Infinity;
             }
         };
 
@@ -73,6 +74,7 @@
             useWrapMode: false,
             onLoad: function(_editor) {
                 _editor.setShowPrintMargin(false);
+                _editor.$blockScrolling = Infinity;
             }
         };
 
@@ -102,6 +104,17 @@
                 $scope.wellFormedDataset = false;
             }
         }, true);
+
+
+        var myElement = document.getElementById('chartArea'),
+            myResizeFn = function(){
+                $scope.options.updated = new Date();
+            };
+        addResizeListener(myElement, myResizeFn);
+
+        $scope.$on("$destroy", function() {
+            removeResizeListener(myElement, myResizeFn);
+        });
 
     }
 

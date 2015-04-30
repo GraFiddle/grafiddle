@@ -10,6 +10,7 @@
       'ngSanitize',
       'ngAnimate',
       'ui.router',
+      'ui.layout',
       'angularChart'
     ]);
 

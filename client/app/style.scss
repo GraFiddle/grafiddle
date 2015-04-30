@@ -15,6 +15,27 @@ div.inputrow {
 div#inputbox {
   padding: 10px;
 }
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    cursor: inherit;
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    background-color: #C0C0C0;
+}
 
 
 
@@ -98,6 +119,7 @@ li.embedview {
   background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;
+  background-color: #C0C0C0;
 }
 
 .btn-primary {

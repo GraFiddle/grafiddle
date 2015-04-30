@@ -27,7 +27,7 @@
                 </div>
                 <div ng-hide="showDataEditor" id="inputbox">
                     <div class="inputrow">
-                        Upload a JSON file: <input type="file" on-read-file="uploadFile($fileContent)"><br/>
+                        Upload a JSON file: <span class="btn btn-file">browse…<input type="file" on-read-file="uploadFile($fileContent)"><br/></span>
                     </div>
                     <div class="inputrow">
                         Enter URL to JSON data: <input type="text" ng-model="dataURL"> <button class="btn" ng-click="loadfromURL()">Get!</button>

@@ -21,9 +21,9 @@
   "overrides": {
     "ace-builds": {
       "main": [
-        "./src/ace.js",
-        "./src/mode-json.js",
-        "./src/worker-json.js"
+        "./src-noconflict/ace.js",
+        "./src-noconflict/mode-json.js",
+        "./src-noconflict/worker-json.js"
       ]
     }
   }

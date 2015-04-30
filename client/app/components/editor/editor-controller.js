@@ -2,6 +2,22 @@
 
     function EditorController($scope, $filter) {
 
+        $scope.dataEditorHidden = true;
+        $scope.dataInputHidden = false;
+        $scope.SwitchButtonTitle = 'Manual data entry';
+
+        $scope.toggleInputEditor = function() {
+            $scope.dataEditorHidden = !$scope.dataEditorHidden;
+            $scope.dataInputHidden = !$scope.dataInputHidden;
+            if ($scope.SwitchButtonTitle == 'Manual data entry') {
+                $scope.SwitchButtonTitle = 'back to input dialog';
+            }
+            else {
+                $scope.SwitchButtonTitle = 'Manual data entry';
+            }
+        };
+
+
         $scope.datasetString = '';
         $scope.dataset = [
             {

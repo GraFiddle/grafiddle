@@ -14,7 +14,21 @@
     <div ui-layout-container>
         <div ui-layout="{flow : 'column'}" >
             <div ui-layout-container class="">
-                <div ng-model="datasetString" ui-ace="datasetAceConfig"></div>
+                <div style="position: absolute; top: 10px; right: 10px; z-index: 999;"><button ng-click="toggleInputEditor()">{{SwitchButtonTitle}}</button></div>
+                <div ng-hide="dataInputHidden">
+                    <div>
+                        <input type="file" on-read-file="displayFileContents(contents)" /><br/>
+                    </div>
+                    <div>
+                        Enter URL to your data: <input type="text" ng-model="dataURL"> <button ng-click="loadfromURL()">Get!</button>
+                    </div>
+                    <div>
+                        Manual data entry? <button ng-click="toggleInputEditor()">Go to editor!</button>
+                    </div>
+                </div>
+
+                <div ng-hide="dataEditorHidden" ng-model="datasetString" ui-ace="datasetAceConfig"></div>
+            
             </div>
             <div ui-layout-container class="">
                 <div ng-model="optionsString" ui-ace="optionsAceConfig"></div>

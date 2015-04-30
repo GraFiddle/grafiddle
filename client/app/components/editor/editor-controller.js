@@ -1,6 +1,18 @@
 (function () {
 
-    function EditorController($scope, $filter) {
+    function EditorController($scope, $filter, CheckpointEndpoint) {
+
+        $scope.save = function () {
+            CheckpointEndpoint.save({
+                "data": $scope.dataset,
+                "options": $scope.options,
+                "author": "Anonym"
+            })
+                .$promise
+                .then(function (checkpoint) {
+                    console.log('saved checkpoint: ', checkpoint);
+                })
+        };
 
         $scope.dataEditorHidden = true;
         $scope.dataInputHidden = false;
@@ -63,7 +75,7 @@
         $scope.optionsAceConfig = {
             mode: 'json',
             useWrapMode: false,
-            onLoad: function(_editor) {
+            onLoad: function (_editor) {
                 _editor.setShowPrintMargin(false);
                 _editor.$blockScrolling = Infinity;
             }
@@ -72,18 +84,18 @@
         $scope.datasetAceConfig = {
             mode: 'json',
             useWrapMode: false,
-            onLoad: function(_editor) {
+            onLoad: function (_editor) {
                 _editor.setShowPrintMargin(false);
                 _editor.$blockScrolling = Infinity;
             }
         };
 
 
-        $scope.$watch('options', function(json) {
+        $scope.$watch('options', function (json) {
             $scope.optionsString = $filter('json')(json);
         }, true);
 
-        $scope.$watch('optionsString', function(json) {
+        $scope.$watch('optionsString', function (json) {
             try {
                 $scope.options = JSON.parse(json);
                 $scope.wellFormedOptions = true;
@@ -92,11 +104,11 @@
             }
         }, true);
 
-        $scope.$watch('dataset', function(json) {
+        $scope.$watch('dataset', function (json) {
             $scope.datasetString = $filter('json')(json);
         }, true);
 
-        $scope.$watch('datasetString', function(json) {
+        $scope.$watch('datasetString', function (json) {
             try {
                 $scope.dataset = JSON.parse(json);
                 $scope.wellFormedDataset = true;
@@ -107,12 +119,12 @@
 
 
         var myElement = document.getElementById('chartArea'),
-            myResizeFn = function(){
+            myResizeFn = function () {
                 $scope.options.updated = new Date();
             };
         addResizeListener(myElement, myResizeFn);
 
-        $scope.$on("$destroy", function() {
+        $scope.$on("$destroy", function () {
             removeResizeListener(myElement, myResizeFn);
         });
 

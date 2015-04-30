@@ -1,0 +1,6 @@
+{
+  "ENV": {
+    "name": "local",
+    "api": "http://grafiddle.appspot.com/"
+  }
+}

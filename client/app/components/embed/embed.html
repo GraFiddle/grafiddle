@@ -1,9 +1,13 @@
-<div>
-    <div>
-        Top / Tab bar
+<div ui-layout>
+    <div style="">
+    <ul class="embedview">
+            <li ng-class="{active:isView('chart')}" class="embedview" ng-click="setView('chart')"><span>Graph</span></li>
+            <li ng-class="{active:isView('dataset')}" class="embedview" ng-click="setView('dataset')"><span>Data</span></li>
+            <li ng-class="{active:isView('options')}" class="embedview" ng-click="setView('options')"><span>Options</span></li>
+    </ul>
     </div>
 
-    <div ng-show="embedView == 'chart'">
+    <div ng-show="embedView == 'chart'" class="embedview">
         <angularchart
             dataset="dataset"
             schema="schema"
@@ -11,11 +15,11 @@
         </angularchart>
     </div>
 
-    <div ng-show="embedView == 'options'">
+    <div ng-show="embedView == 'options'" class="embedview">
         <div ng-model="optionsString" ui-ace="optionsAceConfig"></div>
     </div>
 
-    <div ng-show="embedView == 'dataset'">
+    <div ng-show="embedView == 'dataset'" class="embedview">
         <div ng-model="datasetString" ui-ace="datasetAceConfig"></div>
     </div>
 

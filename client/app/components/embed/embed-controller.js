@@ -1,20 +1,24 @@
 (function () {
 
-    function EmbedController($scope, $filter) {
+    function EmbedController($scope, $filter, $location) {
 
-        $scope.embedView = 'graph';
+        $scope.embedView = 'chart';
+        var requestView = $location.search().view;
+        if(requestView) {
+            $scope.embedView = requestView;
+        }
         
-        $scope.toggleInputEditor = function() {
-            $scope.dataEditorHidden = !$scope.dataEditorHidden;
-            $scope.dataInputHidden = !$scope.dataInputHidden;
-            if ($scope.SwitchButtonTitle == 'Manual data entry') {
-                $scope.SwitchButtonTitle = 'back to input dialog';
-            }
-            else {
-                $scope.SwitchButtonTitle = 'Manual data entry';
-            }
+        $scope.setView = function(newView) {
+            $scope.embedView = newView;
+            $scope.optionsEditor.resize();
+            $scope.dataEditor.resize();
+            $scope.optionsEditor.renderer.updateFull();
+            $scope.dataEditor.renderer.updateFull();
         };
 
+        $scope.isView = function(view) {
+            return view == $scope.embedView;
+        };
 
         $scope.datasetString = '';
         $scope.dataset = [
@@ -63,6 +67,7 @@
             useWrapMode: false,
             onLoad: function(_editor) {
                 _editor.setShowPrintMargin(false);
+                $scope.optionsEditor = _editor;
             }
         };
 
@@ -71,6 +76,7 @@
             useWrapMode: false,
             onLoad: function(_editor) {
                 _editor.setShowPrintMargin(false);
+                $scope.dataEditor = _editor;
             }
         };
 

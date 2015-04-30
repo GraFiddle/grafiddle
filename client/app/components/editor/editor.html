@@ -23,17 +23,17 @@
 
             <div ui-layout-container class="dataArea">
                 <div style="position: absolute; top: 10px; right: 10px; z-index: 999;">
-                    <button ng-click="toggleDataEditor()">{{switchButtonTitle}}</button>
+                    <button class="btn" ng-click="toggleDataEditor()">{{switchButtonTitle}}</button>
                 </div>
-                <div ng-hide="showDataEditor">
-                    <div>
-                        <input type="file" on-read-file="uploadFile($fileContent)"><br/>
+                <div ng-hide="showDataEditor" id="inputbox">
+                    <div class="inputrow">
+                        Upload a JSON file: <input type="file" on-read-file="uploadFile($fileContent)"><br/>
                     </div>
-                    <div>
-                        Enter URL to your data: <input type="text" ng-model="dataURL"> <button ng-click="loadfromURL()">Get!</button>
+                    <div class="inputrow">
+                        Enter URL to JSON data: <input type="text" ng-model="dataURL"> <button class="btn" ng-click="loadfromURL()">Get!</button>
                     </div>
-                    <div>
-                        Manual data entry? <button ng-click="toggleInputEditor()">Go to editor!</button>
+                    <div class="inputrow">
+                        Enter JSON data manually in the editor. <button class="btn" ng-click="toggleInputEditor()">Switch to editor</button>
                     </div>
                 </div>
 

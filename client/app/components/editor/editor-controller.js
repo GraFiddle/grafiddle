@@ -3,8 +3,11 @@
     function EditorController($scope, $filter, CheckpointEndpoint) {
 
         $scope.showDataEditor = false;
-        $scope.switchButtonTitle = 'Manual data entry';
-        $scope.toggleDataEditor = toggleDataEditor
+        $scope.showOptionsUI  = false;
+        $scope.switchDataButtonTitle    = 'Manual data entry';
+        $scope.switchOptionsButtonTitle = 'Edit in GUI';
+        $scope.toggleDataEditor = toggleDataEditor;
+        $scope.toggleOptionsUI = toggleOptionsUI;
 
         $scope.save = save;
         $scope.uploadFile = uploadFile;
@@ -55,7 +58,20 @@
         //
         function toggleDataEditor() {
             $scope.showDataEditor = !$scope.showDataEditor;
-            $scope.switchButtonTitle = $scope.showDataEditor ? 'Back to input dialog' : 'Manual data entry';
+            $scope.switchDataButtonTitle = $scope.showDataEditor ? 'Back to input dialog' : 'Manual data entry';
+        }
+
+        // Toggle from json-option view
+        //
+        function toggleOptionsUI() {
+            $scope.showOptionsUI = !$scope.showOptionsUI;
+            $scope.switchOptionsButtonTitle = $scope.showOptionsUI ? 'Edit as JSON' : 'Edit in GUI';
+        }
+
+        // Create the HTML UI representation of the options json
+        //
+        function updateOptionsUI(json) {
+            $scope.optionsUI = "test";
         }
 
         // Insert default data
@@ -117,6 +133,7 @@
                 try {
                     $scope.checkpoint.options = JSON.parse(json);
                     $scope.wellFormedOptions = true;
+                    updateOptionsUI(json);
                 } catch (e) {
                     $scope.wellFormedOptions = false;
                 }

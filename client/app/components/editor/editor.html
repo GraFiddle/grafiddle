@@ -23,9 +23,9 @@
 
             <div ui-layout-container class="dataArea">
                 <div style="position: absolute; top: 10px; right: 10px; z-index: 999;">
-                    <button class="btn" ng-click="toggleDataEditor()">{{switchButtonTitle}}</button>
+                    <button class="btn btn-primary" style="opacity: 0.85;" ng-click="toggleDataEditor()">{{switchDataButtonTitle}}</button>
                 </div>
-                <div ng-hide="showDataEditor" id="inputbox">
+                <div ng-hide="showDataEditor" class="inputbox">
                     <div class="inputrow">
                         Upload a JSON file: <span class="btn btn-file">browse…<input type="file" on-read-file="uploadFile($fileContent)"><br/></span>
                     </div>
@@ -41,7 +41,15 @@
             </div>
 
             <div ui-layout-container class="optionsArea">
-                <div ng-model="checkpoint.optionsString" ui-ace="aceJsonConfig"></div>
+                <div style="position: absolute; top: 10px; right: 10px; z-index: 999;">
+                    <button class="btn btn-primary" style="opacity: 0.85;" ng-click="toggleOptionsUI()">{{switchOptionsButtonTitle}}</button>
+                </div>
+
+                <div ng-show="showOptionsUI" class="inputbox">
+                    <div ng-bind-html="optionsUI"></div>
+                </div>
+
+                <div ng-hide="showOptionsUI" ng-model="checkpoint.optionsString" ui-ace="aceJsonConfig"></div>
             </div>
 
         </div>

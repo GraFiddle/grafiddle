@@ -1,8 +1,6 @@
 <div ui-layout>
     <div ui-layout-container class="header" size="50px" max-size="50px" min-size="50px" >
-        <a href ui-sref="editor" class="header-logo left">
-            <h1>grafiddle</h1>
-        </a>
+        <a href ui-sref="editor" class="header-logo left" title="grafiddle"></a>
         <button type="button" class="btn left" ng-show="serverCheckpoint" ng-click="save()">Fork</button>
         <button type="button" class="btn left" ng-show="!serverCheckpoint" ng-click="save()">Save</button>
         <button type="button" class="btn btn-primary left" ng-show="serverCheckpoint" ng-click="sharePopup()">Share</button>

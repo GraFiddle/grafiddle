@@ -12,6 +12,7 @@
         $scope.sharePopup       = sharePopup;
         $scope.onShareTextClick = onShareTextClick;
         $scope.addOption = addOption;
+        $scope.title = '';
 
         $scope.share = share;
         $scope.save = save;
@@ -80,7 +81,8 @@
                 "data": $scope.checkpoint.dataset,
                 "options": $scope.checkpoint.options,
                 "author": "Anonym",
-                "base": $scope.serverCheckpoint.id
+                "base": $scope.serverCheckpoint.id,
+                "title": $scope.title
             })
                 .$promise
                 .then(function (checkpoint) {
@@ -217,6 +219,7 @@
             $scope.checkpoint.schema = {};
             $scope.checkpoint.optionsString = '';
             $scope.checkpoint.options = checkpoint.options;
+            $scope.title = checkpoint.title;
         }
 
         // Sync Object and String representation

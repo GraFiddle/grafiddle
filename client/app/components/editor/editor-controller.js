@@ -46,17 +46,17 @@
                     });
             } else {
                 loadDefaultData();
+                $timeout(saveAsImage, 0);
             }
             syncOptions();
             syncDataset();
             updateOnResize();
-
-
         }
 
         function saveAsImage() {
             canvg(document.getElementById('canvas'), d3.select(".angularchart").node().innerHTML);
             $scope.asImage = document.getElementById('canvas').toDataURL();
+            $scope.metadata.og['og:image'] = $scope.asImage;
         }
 
         // Save the current Version

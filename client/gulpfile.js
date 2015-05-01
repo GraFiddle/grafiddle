@@ -50,7 +50,7 @@ var scssMain = 'style.scss';
 //
 var bases = {
     app: 'app/',
-    dist: 'dist/'
+    dist: '../server/static/'
 };
 
 var app = {
@@ -204,7 +204,7 @@ gulp.task('compass', ['images'], function () {
         .pipe(compass({
             project: __dirname,
             sass: 'app/',
-            css: 'dist/css/',
+            css: dist.css,
             environment: environment,
             sourcemap: true,
             debug: false,
@@ -325,7 +325,7 @@ gulp.task('statics', function () {
 //
 gulp.task('connect', ['build'], function () {
     connect.server({
-        root: ['dist'],
+        root: [bases.dist],
         port: port,
         livereload: true,
         middleware: function (connect, opt) {

@@ -17,8 +17,10 @@ class Option(ndb.Model):
 class Checkpoint(ndb.Model):
     data = ndb.JsonProperty(required=True)
     options = ndb.JsonProperty(required=True)
+    title = ndb.StringProperty(required=False)
     author = ndb.StringProperty(required=False)
     base = ndb.KeyProperty(kind='Checkpoint')
+    # tree = ndb.KeyProperty(kind='Checkpoint') # root
     date = ndb.DateTimeProperty(auto_now_add=True)
 
 
@@ -51,19 +53,25 @@ def create_checkpoint():
     if 'options' not in request.json:
         return 'You forgot to set "options"', 400
 
-    cp = Checkpoint.get_by_id(int(request.json['base']), parent=None)
-    if cp is None:
-        checkpoint = Checkpoint(data=request.json['data'],
-                                options=request.json['options'],
-                                author=request.json['author'])
-    else:
-        checkpoint = Checkpoint(data=request.json['data'],
-                                options=request.json['options'],
-                                author=request.json['author'],
-                                base=cp.key)
+    author = request.json['author'] if 'author' in request.json else 'Anonymous'
+    title = request.json['title'] if 'title' in request.json else 'Unnamed Grafiddle'
+
+    checkpoint = Checkpoint(data=request.json['data'], options=request.json['options'], title=title, author=author)
+
+    # tree_cp = Checkpoint.get_by_id(int(request.json['tree']), parent=None)
+    if 'base' in request.json and request.json['base'] is not None:
+        cp = Checkpoint.get_by_id(int(request.json['base']), parent=None)
+        if cp is not None:
+            checkpoint.base=cp.key
+
     checkpoint.put()
 
     return checkpoint_to_json(checkpoint), 201
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return app.send_static_file('index.html')
 
 
 @app.route('/checkpoint/<int:id>', methods=['GET'])
@@ -78,6 +86,4 @@ def get_checkpoint(id):
     return checkpoint_to_json(checkpoint)
 
 
-@app.errorhandler(404)
-def page_not_found(e):
-    return not_found_msg, 404
+

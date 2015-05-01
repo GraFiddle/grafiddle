@@ -19,14 +19,15 @@ class Checkpoint(ndb.Model):
     options = ndb.JsonProperty(required=True)
     title = ndb.StringProperty(required=False)
     author = ndb.StringProperty(required=False)
-    base = ndb.KeyProperty(kind='Checkpoint')
-    # tree = ndb.KeyProperty(kind='Checkpoint') # root
+    base = ndb.KeyProperty(kind='Checkpoint') # parent checkpoint
+    tree = ndb.KeyProperty(kind='Checkpoint') # root checkpoint
     date = ndb.DateTimeProperty(auto_now_add=True)
 
 
 def checkpoint_to_json(cp):
     result = cp.to_dict()
     result['id'] = cp.key.id()
+    result['tree'] = cp.tree.id()
     if result['base'] is not None:
         result['base'] = cp.base.id()
     result['date'] = cp.date.isoformat()
@@ -58,13 +59,17 @@ def create_checkpoint():
 
     checkpoint = Checkpoint(data=request.json['data'], options=request.json['options'], title=title, author=author)
 
-    # tree_cp = Checkpoint.get_by_id(int(request.json['tree']), parent=None)
     if 'base' in request.json and request.json['base'] is not None:
         cp = Checkpoint.get_by_id(int(request.json['base']), parent=None)
         if cp is not None:
-            checkpoint.base=cp.key
+            checkpoint.tree = cp.tree
+            checkpoint.base = cp.key
 
     checkpoint.put()
+
+    if checkpoint.tree is None:
+        checkpoint.tree = checkpoint.key
+        checkpoint.put()
 
     return checkpoint_to_json(checkpoint), 201
 

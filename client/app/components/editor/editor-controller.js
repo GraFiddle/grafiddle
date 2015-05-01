@@ -64,7 +64,7 @@
             }
             syncOptions();
             syncDataset();
-            updateOnResize();
+            //updateOnResize();
         }
 
         function saveAsImage() {
@@ -79,7 +79,8 @@
             CheckpointEndpoint.save({
                 "data": $scope.checkpoint.dataset,
                 "options": $scope.checkpoint.options,
-                "author": "Anonym"
+                "author": "Anonym",
+                "base": $scope.serverCheckpoint.id
             })
                 .$promise
                 .then(function (checkpoint) {
@@ -241,6 +242,7 @@
         function syncDataset() {
             $scope.$watch('checkpoint.dataset', function (json) {
                 $scope.checkpoint.datasetString = $filter('json')(json);
+                opdateOptions();
             }, true);
 
             $scope.$watch('checkpoint.datasetString', function (json) {
@@ -257,7 +259,9 @@
         //
         function opdateOptions() {
             // Is called to often, not only on resize
-            //$scope.checkpoint.options.updated = new Date();
+            if ($scope.checkpoint && $scope.checkpoint.options) {
+                $scope.checkpoint.options.updated = new Date();
+            }
         }
 
         // Trigger new render on resize

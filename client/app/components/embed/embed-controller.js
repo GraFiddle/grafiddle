@@ -2,6 +2,8 @@
 
     function EmbedController($scope, $filter, $location) {
 
+        $scope.fiddleid = $location.path().substr(1).split('?', 1)[0];
+
         $scope.embedView = 'chart';
         var requestView = $location.search().view;
         if(requestView) {

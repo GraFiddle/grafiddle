@@ -7,7 +7,8 @@
             id: '@id'
         }, {
             get: {
-                method: 'GET'
+                method: 'GET',
+                isArray: true
             }
         });
     }

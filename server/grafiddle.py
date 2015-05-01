@@ -25,7 +25,8 @@ class Checkpoint(ndb.Model):
 def checkpoint_to_json(cp):
     result = cp.to_dict()
     result['id'] = cp.key.id()
-    result['base'] = cp.base.id()
+    if result['base'] is not None:
+        result['base'] = cp.base.id()
     result['date'] = cp.date.isoformat()
     return jsonify(result)
 
@@ -44,18 +45,22 @@ def create_checkpoint():
     if not request.json:
         return 'Please provide data in JSON format', 400
 
-    # if 'data' not in request.json:
-    #     return 'You forgot to set "data"', 400
-    #
-    # if 'options' not in request.json:
-    #     return 'You forgot to set "options"', 400
+    if 'data' not in request.json:
+        return 'You forgot to set "data"', 400
 
-    base = ndb.Key("Checkpoint", int(request.json['base']))
+    if 'options' not in request.json:
+        return 'You forgot to set "options"', 400
 
-    checkpoint = Checkpoint(data=request.json['data'],
-                            options=request.json['options'],
-                            author=request.json['author'],
-                            base=base)
+    cp = Checkpoint.get_by_id(int(request.json['base']), parent=None)
+    if cp is None:
+        checkpoint = Checkpoint(data=request.json['data'],
+                                options=request.json['options'],
+                                author=request.json['author'])
+    else:
+        checkpoint = Checkpoint(data=request.json['data'],
+                                options=request.json['options'],
+                                author=request.json['author'],
+                                base=cp.key)
     checkpoint.put()
 
     return checkpoint_to_json(checkpoint), 201

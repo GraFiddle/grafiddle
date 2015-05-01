@@ -104,8 +104,4 @@ def get_tree(id):
     cps = Checkpoint.query(Checkpoint.tree == checkpoint.key)
     checkpoints = [prepare_for_json(cp, ['data', 'options']) for cp in cps]
 
-    response = Response()
-    response.data = dumps(checkpoints)
-    response.headers['Content-Type'] = 'application/json'
-
-    return response
+    return Response(dumps(checkpoints),  mimetype='application/json')

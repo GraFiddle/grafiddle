@@ -82,7 +82,7 @@
                 "data": $scope.checkpoint.dataset,
                 "options": $scope.checkpoint.options,
                 "author": $scope.author,
-                "base": $scope.serverCheckpoint.id,
+                "base": $scope.serverCheckpoint && $scope.serverCheckpoint.id,
                 "title": $scope.title
             })
                 .$promise

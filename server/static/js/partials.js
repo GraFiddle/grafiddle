@@ -18,7 +18,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('components/embed/embed.html',
-    '<div ui-layout=""><div><ul class="embedview"><li ng-class="{active:isView(\'chart\')}" class="embedview" ng-click="setView(\'chart\')"><span>Graph</span></li><li ng-class="{active:isView(\'dataset\')}" class="embedview" ng-click="setView(\'dataset\')"><span>Data</span></li><li ng-class="{active:isView(\'options\')}" class="embedview" ng-click="setView(\'options\')"><span>Options</span></li></ul><div style="float: right;"><a href="./{{fiddleid}}" style="font-size: small;">Edit in grafiddle</a></div></div><div ng-show="embedView == \'chart\'" class="embedview"><angularchart dataset="dataset" schema="schema" options="options"></angularchart></div><div ng-show="embedView == \'options\'" class="embedview"><div ng-model="optionsString" ui-ace="optionsAceConfig"></div></div><div ng-show="embedView == \'dataset\'" class="embedview"><div ng-model="datasetString" ui-ace="datasetAceConfig"></div></div></div>');
+    '<div ui-layout=""><div><ul class="embedview"><li ng-class="{active:isView(\'chart\')}" class="embedview" ng-click="setView(\'chart\')"><span>Graph</span></li><li ng-class="{active:isView(\'dataset\')}" class="embedview" ng-click="setView(\'dataset\')"><span>Data</span></li><li ng-class="{active:isView(\'options\')}" class="embedview" ng-click="setView(\'options\')"><span>Options</span></li></ul><div style="float: right;"><a href="" ui-sref="editor({id: serverCheckpoint.id})" style="font-size: small;">Edit in grafiddle</a></div></div><div ng-show="embedView == \'chart\'" class="embedview"><angularchart class="angularchart" dataset="checkpoint.dataset" schema="checkpoint.schema" options="checkpoint.options"></angularchart></div><div ng-show="embedView == \'options\'" class="embedview"><div ng-model="checkpoint.optionsString" ui-ace="optionsAceConfig"></div></div><div ng-show="embedView == \'dataset\'" class="embedview"><div ng-model="checkpoint.datasetString" ui-ace="datasetAceConfig"></div></div></div>');
 }]);
 })();
 
@@ -30,6 +30,6 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('components/tree/tree.html',
-    '<div class="header" size="50px" max-size="50px" min-size="50px"><a href="" ui-sref="editor" class="header-logo left"><h1>grafiddle</h1></a> <a href="" ui-sref="editor({id: checkpoint.id})" class="link left">Back to the chart</a> <button type="button" class="btn right">Login</button> <button type="button" class="btn btn-primary right">Sign Up</button></div><div id="tree"></div>');
+    '<div class="header" size="50px" max-size="50px" min-size="50px"><a href="" ui-sref="editor" class="header-logo left"></a> <a href="" ui-sref="editor({id: checkpoint.id})" class="link left">Back to the chart</a> <button type="button" class="btn right">Login</button> <button type="button" class="btn btn-primary right">Sign Up</button></div><div id="tree"></div>');
 }]);
 })();

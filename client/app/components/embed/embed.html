@@ -5,23 +5,25 @@
                 <li ng-class="{active:isView('dataset')}" class="embedview" ng-click="setView('dataset')"><span>Data</span></li>
                 <li ng-class="{active:isView('options')}" class="embedview" ng-click="setView('options')"><span>Options</span></li>
         </ul>
-        <div style="float: right;"><a href="./{{fiddleid}}" style="font-size: small;">Edit in grafiddle</a></div>
+        <div style="float: right;">
+            <a href ui-sref="editor({id: serverCheckpoint.id})" style="font-size: small;">Edit in grafiddle</a></div>
     </div>
 
     <div ng-show="embedView == 'chart'" class="embedview">
         <angularchart
-            dataset="dataset"
-            schema="schema"
-            options="options">
+            class="angularchart"
+            dataset="checkpoint.dataset"
+            schema="checkpoint.schema"
+            options="checkpoint.options">
         </angularchart>
     </div>
 
     <div ng-show="embedView == 'options'" class="embedview">
-        <div ng-model="optionsString" ui-ace="optionsAceConfig"></div>
+        <div ng-model="checkpoint.optionsString" ui-ace="optionsAceConfig"></div>
     </div>
 
     <div ng-show="embedView == 'dataset'" class="embedview">
-        <div ng-model="datasetString" ui-ace="datasetAceConfig"></div>
+        <div ng-model="checkpoint.datasetString" ui-ace="datasetAceConfig"></div>
     </div>
 
 </div>

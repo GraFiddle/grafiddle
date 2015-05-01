@@ -170,38 +170,71 @@
         function loadDefaultData() {
             var dataset = [
                 {
-                    'day': '2013-01-02_00:00:00',
-                    'sales': 3461.295202,
-                    'income': 12365.053
+                    "day": "2013-01-02",
+                    "first": 12365.053,
+                    "second": 1600,
+                    "third": 1300,
+                    "fouth": 1500,
+                    "line": 6000.295202
                 },
                 {
-                    'day': '2013-01-03_00:00:00',
-                    'sales': 4461.295202,
-                    'income': 13365.053
+                    "day": "2013-01-03",
+                    "first": 1203.053,
+                    "second": 16000,
+                    "third": 1300,
+                    "fouth": 1500,
+                    "line": 13365.053
                 },
                 {
-                    'day': '2013-01-04_00:00:00',
-                    'sales': 4561.295202,
-                    'income': 14365.053
+                    "day": "2013-01-04",
+                    "first": 1235.053,
+                    "second": 1600,
+                    "third": 13000,
+                    "fouth": 1500,
+                    "line": 9365.053
+                },
+                {
+                    "day": "2013-01-05",
+                    "first": 1265.053,
+                    "second": 1600,
+                    "third": 1300,
+                    "fouth": 15000,
+                    "line": 14365.053
                 }
             ];
             var schema = {
-                day: {
-                    type: 'datetime',
-                    format: '%Y-%m-%d_%H:%M:%S',
-                    name: 'Date'
-                }
             };
             var options = {
-                rows: [{
-                    key: 'income',
-                    type: 'bar'
-                }, {
-                    key: 'sales'
-                }],
-                xAxis: {
-                    key: 'day',
-                    displayFormat: '%Y-%m-%d %H:%M:%S'
+                "rows": [
+                    {
+                        "key": "first",
+                        "type": "bar",
+                        "color": "green"
+                    },
+                    {
+                        "key": "second",
+                        "type": "bar",
+                        "color": "orange"
+                    },
+                    {
+                        "key": "third",
+                        "type": "bar",
+                        "color": "blue"
+                    },
+                    {
+                        "key": "fouth",
+                        "type": "bar",
+                        "color": "red"
+                    },
+                    {
+                        "key": "line",
+                        "type": "spline",
+                        "color": "black"
+                    }
+                ],
+                "updated": "2015-05-01T11:56:50.707Z",
+                "xAxis": {
+                    "key": "day"
                 }
             };
 

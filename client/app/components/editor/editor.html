@@ -6,6 +6,8 @@
         <button type="button" class="btn left" ng-show="serverCheckpoint" ng-click="save()">Fork</button>
         <button type="button" class="btn left" ng-show="!serverCheckpoint" ng-click="save()">Save</button>
         <button type="button" class="btn btn-primary left" ng-show="serverCheckpoint" ng-click="sharePopup()">Share</button>
+        <a href ui-sref="tree({id: serverCheckpoint.id})" ng-show="serverCheckpoint" class="link left" >See Revisions</a>
+
         <button type="button" class="btn right">Login</button>
         <button type="button" class="btn btn-primary right">Sign Up</button>
     </div>

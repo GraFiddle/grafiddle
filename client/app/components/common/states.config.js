@@ -21,6 +21,15 @@
                     }
                 }
             })
+            .state('tree', {
+                url: '/:id/tree',
+                views: {
+                    content: {
+                        templateUrl: 'components/tree/tree.html',
+                        controller: 'TreeController'
+                    }
+                }
+            })
             .state('editor', {
                 url: '/:id',
                 views: {

@@ -34,6 +34,19 @@ div.sharerow > input[type=text] {
 }
 
 /**
+  Options UI
+*************************************/
+div.optionsuirows {
+  padding: 15px;
+  margin-top: 30px;
+}
+
+div.optionsuirows > input[type=text] {
+  width: 250px;
+  margin-top: 10px;
+}
+
+/**
   Input View
 *************************************/
 div.inputrow {
@@ -161,6 +174,14 @@ body {
 .header .btn {
   margin: 7px;
 }
+.header .link {
+  line-height: 3;
+  color: steelblue;
+  text-decoration: none;
+}
+.header .link:hover {
+  text-decoration: underline;
+}
 
 .header-logo {
   text-decoration: none;
@@ -181,6 +202,34 @@ angularchart {
 
 .optionsArea, .dataArea {
   border: solid 1px gray;
+}
+
+.node {
+  cursor: pointer;
+}
+.node:hover {
+  fill: steelblue;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 3px;
+}
+
+.node text {
+  font: 12px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2px;
+}
+
+#tree svg {
+  margin: auto;
+  display: block;
 }
 
 /*# sourceMappingURL=style.css.map */

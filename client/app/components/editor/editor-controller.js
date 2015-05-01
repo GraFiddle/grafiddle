@@ -1,14 +1,18 @@
 (function () {
 
-    function EditorController($scope, $filter, $state, $location, CheckpointEndpoint) {
+    function EditorController($scope, $filter, $state, $location, $window, CheckpointEndpoint) {
 
         $scope.showDataEditor = false;
         $scope.showOptionsUI  = false;
+        $scope.showSharePopup = false;
         $scope.switchDataButtonTitle    = 'Manual data entry';
         $scope.switchOptionsButtonTitle = 'Edit in GUI';
         $scope.toggleDataEditor = toggleDataEditor;
-        $scope.toggleOptionsUI = toggleOptionsUI;
+        $scope.toggleOptionsUI  = toggleOptionsUI;
+        $scope.sharePopup       = sharePopup;
+        $scope.onShareTextClick = onShareTextClick;
 
+        $scope.share = share;
         $scope.save = save;
         $scope.uploadFile = uploadFile;
 
@@ -65,6 +69,21 @@
                 })
         }
 
+        // Share the fiddle
+        //
+        function share(target) {
+            fiddleURL       = 'http://grafiddle.appspot.com/' + $state.params.id;
+            if(target == 'FB') {
+                $window.open('https://www.facebook.com/sharer/sharer.php?u=' + fiddleURL, '_blank');
+            }
+            if(target == 'Twitter') {
+                $window.open('https://twitter.com/intent/tweet?text=Check%20out%20this%20sweet%20grafiddle%20&url=' + fiddleURL, '_blank');
+            }
+            if(target == 'E-Mail') {
+                $window.location = 'mailto:a@b.cd?subject=Check%20out%20this%20awesome%20Grafiddle&body=' + fiddleURL;
+            }
+        }
+
         // Upload a file as data source
         //
         function uploadFile(file) {
@@ -91,6 +110,21 @@
         function updateOptionsUI(json) {
             $scope.optionsUI = "test";
         }
+
+        // Show the share sheet
+        //
+        function sharePopup() {
+            $scope.showSharePopup = !$scope.showSharePopup;
+            $scope.fiddleURL       = 'http://grafiddle.appspot.com/' + $state.params.id;
+            $scope.fiddleChartURL  = 'http://grafiddle.appspot.com/' + $state.params.id + '.png';
+            $scope.fiddleEmbedCode = '<iframe width="100%" height="300" src="//grafiddle.appspot.com/embed/' + $state.params.id + '" allowfullscreen="allowfullscreen" frameborder="0"></iframe>';
+        }
+
+        // Allow share text fields to autoselect on focus
+        //
+        function onShareTextClick($event) {
+            $event.target.select();
+        };
 
         // Insert default data
         //

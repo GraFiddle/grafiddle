@@ -5,6 +5,39 @@
 
 
 /**
+  Share Popup
+*************************************/
+
+div.sharerow {
+  padding: 15px;
+  margin-top: 20px;
+}
+div.sharebox {
+  padding: 10px;
+  position: absolute;
+  top: 60px;
+  left: 120px;
+  width: 300px;
+  height: 400px;
+  background-color: #E0E0E0;
+  z-index:9999;
+  border-radius: 4px;
+}
+div.sharerow > input[type=text] {
+  width: 250px;
+  margin-top: 10px;
+}
+#fbbutton {
+  background-color: #3b5998;
+  color: white;
+}
+#twitterbutton {
+  background-color: white;
+  color: #55ACEE;
+}
+
+
+/**
   Input View
 *************************************/
 

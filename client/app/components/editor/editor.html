@@ -5,9 +5,19 @@
         </a>
         <button type="button" class="btn left" ng-show="serverCheckpoint" ng-click="save()">Fork</button>
         <button type="button" class="btn left" ng-show="!serverCheckpoint" ng-click="save()">Save</button>
-        <button type="button" class="btn btn-primary left">Share</button>
+        <button type="button" class="btn btn-primary left" ng-show="serverCheckpoint" ng-click="sharePopup()">Share</button>
         <button type="button" class="btn right">Login</button>
         <button type="button" class="btn btn-primary right">Sign Up</button>
+    </div>
+    <div ng-show="showSharePopup" class="sharebox">
+        <div class="sharerow">Direct link to this grafiddle:<br /><input ng-click="onShareTextClick($event)" type="text" ng-model="fiddleURL"></div>
+        <div class="sharerow">This grafiddle chart as a PNG:<br /><input ng-click="onShareTextClick($event)" type="text" ng-model="fiddleChartURL"></div>
+        <div class="sharerow">Embed this grafiddle:<br /><input ng-click="onShareTextClick($event)" type="text" ng-model="fiddleEmbedCode"></div>
+        <div class="sharerow">
+            <button type="button" id="fbbutton" class="btn" ng-click="share('FB')">Facebook</button>
+            <button type="button" id="twitterbutton" class="btn" ng-click="share('Twitter')">Twitter</button>
+            <button type="button" class="btn" ng-click="share('E-Mail')">E-Mail</button>
+        </div>
     </div>
 
     <div ui-layout-container class="chartArea" id="chartArea" size="60%">

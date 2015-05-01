@@ -1,6 +1,6 @@
 (function () {
 
-    function EditorController($scope, $filter, $state, $location, $window, CheckpointEndpoint) {
+    function EditorController($scope, $filter, $state, $window, $timeout, CheckpointEndpoint) {
 
         $scope.showDataEditor = false;
         $scope.showOptionsUI  = false;
@@ -39,6 +39,7 @@
                     .then(function(checkpoint) {
                         $scope.serverCheckpoint = checkpoint;
                         setCheckpoint(checkpoint);
+                        $timeout(saveAsImage, 0);
                     })
                     .catch(function(){
                         $state.go('editor', {id: ''});
@@ -49,14 +50,21 @@
             syncOptions();
             syncDataset();
             updateOnResize();
+
+
+        }
+
+        function saveAsImage() {
+            canvg(document.getElementById('canvas'), d3.select(".angularchart").node().innerHTML);
+            $scope.asImage = document.getElementById('canvas').toDataURL();
         }
 
         // Save the current Version
         //
         function save() {
             CheckpointEndpoint.save({
-                "data": $scope.dataset,
-                "options": $scope.options,
+                "data": $scope.checkpoint.dataset,
+                "options": $scope.checkpoint.options,
                 "author": "Anonym"
             })
                 .$promise

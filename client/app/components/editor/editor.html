@@ -22,10 +22,14 @@
 
     <div ui-layout-container class="chartArea" id="chartArea" size="60%">
         <angularchart
+            class="angularchart"
             dataset="checkpoint.dataset"
             schema="checkpoint.schema"
             options="checkpoint.options">
         </angularchart>
+
+        <canvas id="canvas" style="display: none"></canvas>
+
     </div>
 
     <div ui-layout-container>

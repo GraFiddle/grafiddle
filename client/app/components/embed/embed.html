@@ -1,10 +1,11 @@
 <div ui-layout>
-    <div style="">
-    <ul class="embedview">
-            <li ng-class="{active:isView('chart')}" class="embedview" ng-click="setView('chart')"><span>Graph</span></li>
-            <li ng-class="{active:isView('dataset')}" class="embedview" ng-click="setView('dataset')"><span>Data</span></li>
-            <li ng-class="{active:isView('options')}" class="embedview" ng-click="setView('options')"><span>Options</span></li>
-    </ul>
+    <div>
+        <ul class="embedview">
+                <li ng-class="{active:isView('chart')}" class="embedview" ng-click="setView('chart')"><span>Graph</span></li>
+                <li ng-class="{active:isView('dataset')}" class="embedview" ng-click="setView('dataset')"><span>Data</span></li>
+                <li ng-class="{active:isView('options')}" class="embedview" ng-click="setView('options')"><span>Options</span></li>
+        </ul>
+        <div style="float: right;"><a href="./{{fiddleid}}" style="font-size: small;">Edit in grafiddle</a></div>
     </div>
 
     <div ng-show="embedView == 'chart'" class="embedview">

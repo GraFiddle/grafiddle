@@ -6,6 +6,17 @@ threadsafe: yes
 module: default
 
 handlers:
+- url: /(.*\.ico)
+  mime_type: image/x-icon
+  static_files: static/\1
+  upload: static/(.*\.ico)
+
+- url: /(.*\.txt)
+  mime_type: text/plain
+  static_files: static/\1
+  upload: static/(.*\.txt)
+
+
 - url: .*
   script: grafiddle.app
 

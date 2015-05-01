@@ -11,10 +11,23 @@
         $scope.toggleOptionsUI  = toggleOptionsUI;
         $scope.sharePopup       = sharePopup;
         $scope.onShareTextClick = onShareTextClick;
+        $scope.addOption = addOption;
 
         $scope.share = share;
         $scope.save = save;
         $scope.uploadFile = uploadFile;
+
+        $scope.optionsUIrowTypeOptions = [
+            { label: 'line', value: 1 },
+            { label: 'spline', value: 2 },
+            { label: 'bar', value: 3 },
+            { label: 'scatter', value: 4 },
+            { label: 'area', value: 5 },
+            { label: 'area-spline', value: 6 },
+            { label: 'step', value: 7 },
+            { label: 'area-step', value: 8 },
+            { label: 'step', value: 9 }
+        ];
 
         $scope.checkpoint = {};
         $scope.aceJsonConfig = {
@@ -136,6 +149,17 @@
         function onShareTextClick($event) {
             $event.target.select();
         };
+
+        
+        // Insert default data
+        //
+        function addOption(option) {
+            if(option == 'row')
+            {
+                $scope.checkpoint.options.rows = $scope.checkpoint.options.rows.concat([{key : "new row"}])
+            }
+        }
+
 
         // Insert default data
         //

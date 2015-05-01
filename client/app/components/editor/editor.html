@@ -63,8 +63,13 @@
 
                 <div ng-show="showOptionsUI" class="inputbox">
                     <div class="optionsuirows">
-                        <span>Rows</span><br />
-                        <p ng-repeat="value in checkpoint.options.rows"><input type="text" ng-model="value.key"> <span ng-if="value.type">{{value.type}}</span></p>
+                        <span>Rows</span> <span style="font-size: small;">(<span ng-click="addOption('row')" style="font-weight: bold;">add</span>)</span><br />
+                        <p ng-repeat="value in checkpoint.options.rows">Key: <input type="text" ng-model="value.key"> Type: <select ng-model="value.type" ng-options="opt.label as opt.label for opt in optionsUIrowTypeOptions"></select></p>
+                    </div>
+                    <div class="optionsuirows" ng-if="checkpoint.options.size">
+                        <span>Size</span><br />
+                        <p>Height: <input type="text" ng-model="checkpoint.options.size.height"></p>
+                        <p>Width: <input type="text" ng-model="checkpoint.options.size.width"></p>
                     </div>
                 </div>
 

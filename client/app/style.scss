@@ -46,11 +46,13 @@ div.optionsuirows {
   margin-top: 30px;
 }
 
-div.optionsuirows > input[type=text] {
-    width: 250px;
-    margin-top: 10px;
+div.optionsuirows, input[type=text] {
+    margin-top: 5px;
 }
 
+div.optionsuirows, select {
+    margin-left: 5px;
+}
 
 
 /**

@@ -208,8 +208,12 @@ body {
 .header .link:hover {
   text-decoration: underline;
 }
-.header .input {
+.header .input-title {
   margin-left: 100px;
+  margin-top: 7px;
+}
+.header .input-author {
+  margin-left: 5px;
   margin-top: 7px;
 }
 

@@ -13,6 +13,7 @@
         $scope.onShareTextClick = onShareTextClick;
         $scope.addOption = addOption;
         $scope.title = '';
+        $scope.author = '';
 
         $scope.share = share;
         $scope.save = save;
@@ -80,7 +81,7 @@
             CheckpointEndpoint.save({
                 "data": $scope.checkpoint.dataset,
                 "options": $scope.checkpoint.options,
-                "author": "Anonym",
+                "author": $scope.author,
                 "base": $scope.serverCheckpoint.id,
                 "title": $scope.title
             })
@@ -220,6 +221,7 @@
             $scope.checkpoint.optionsString = '';
             $scope.checkpoint.options = checkpoint.options;
             $scope.title = checkpoint.title;
+            $scope.author = checkpoint.author;
         }
 
         // Sync Object and String representation

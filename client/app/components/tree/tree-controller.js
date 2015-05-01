@@ -1,11 +1,27 @@
 (function () {
 
-    function TreeController($scope, $state) {
+    function TreeController($scope, $state, CheckpointEndpoint, TreeEndpoint) {
 
         $scope.checkpoint = {
             id: $state.params.id
         };
-        console.log($scope.checkpoint);
+
+        CheckpointEndpoint
+            .get({id: $state.params.id})
+            .$promise
+            .then(function(checkpoint) {
+                $scope.checkpoint = checkpoint;
+                TreeEndpoint
+                    .get({id: checkpoint.tree})
+                    .$promise
+                    .then(function(tree) {
+                        convertTree(tree);
+                    });
+            });
+
+        function convertTree(tree) {
+            // TODO
+        }
 
         function click(d) {
             console.log(d);
@@ -105,7 +121,6 @@
                 .text(function(d) {
                     var text = d.name;
                     // + ' by ' + d.author;
-                    console.log(d.id, $scope.checkpoint.id);
                     if (d.id == $scope.checkpoint.id) {
                         text += ' (current)';
                     }

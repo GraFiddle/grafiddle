@@ -3,8 +3,8 @@
         <a href ui-sref="editor" class="header-logo left">
             <h1>grafiddle</h1>
         </a>
-        <button type="button" class="btn left">Fork</button>
-        <button type="button" class="btn left" ng-click="save()">Save</button>
+        <button type="button" class="btn left" ng-show="serverCheckpoint" ng-click="save()">Fork</button>
+        <button type="button" class="btn left" ng-show="!serverCheckpoint" ng-click="save()">Save</button>
         <button type="button" class="btn btn-primary left">Share</button>
         <button type="button" class="btn right">Login</button>
         <button type="button" class="btn btn-primary right">Sign Up</button>
@@ -33,7 +33,7 @@
                         Enter URL to JSON data: <input type="text" ng-model="dataURL"> <button class="btn" ng-click="loadfromURL()">Get!</button>
                     </div>
                     <div class="inputrow">
-                        Enter JSON data manually in the editor. <button class="btn" ng-click="toggleInputEditor()">Switch to editor</button>
+                        Enter JSON data manually in the editor. <button class="btn" ng-click="toggleDataEditor()">Switch to editor</button>
                     </div>
                 </div>
 

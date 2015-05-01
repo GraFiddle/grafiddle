@@ -3,7 +3,9 @@
     'use strict';
 
     function CheckpointEndpoint($resource, ENV) {
-        return $resource(ENV.api + '/checkpoint/:id', {}, {
+        return $resource(ENV.api + 'checkpoint/:id', {
+            id: '@id'
+        }, {
             save: {
                 method: 'POST'
             },

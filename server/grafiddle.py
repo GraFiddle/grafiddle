@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
 from google.appengine.ext import ndb
+from options_handler import crossdomain
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
+
+not_found_msg = 'Sorry, nothing at this URL'
 
 
 class Data(ndb.Model):
@@ -19,7 +22,14 @@ class Checkpoint(ndb.Model):
     date = ndb.DateTimeProperty(auto_now_add=True)
 
 
+def checkpoint_to_json(cp):
+    result = cp.to_dict()
+    result['id'] = cp.key.id()
+    result['date'] = cp.date.isoformat()
+    return jsonify(result)
+
 @app.route('/checkpoint', methods=['POST'])
+@crossdomain(origin='*')
 def create_checkpoint():
     if not request.json:
         return 'Please provide data in JSON format', 400
@@ -28,21 +38,22 @@ def create_checkpoint():
                             options=request.json['options'],
                             author=request.json['author'])
     checkpoint.put()
-    result = checkpoint.to_dict()
-    result['id'] = checkpoint.key.id()
-    result['date'] = checkpoint.date.isoformat()
-    return jsonify(result)
+
+    return checkpoint_to_json(checkpoint), 201
 
 
 @app.route('/checkpoint/<int:id>', methods=['GET'])
+@crossdomain(origin='*')
 def get_checkpoint(id):
-    # checkpoint = Checkpoint(id=5071522616049664)
-    # c = checkpoint.get_by_id()
-    # print c
-    # return jsonify(c)
-    return "requested id is %s" % id
+    id = int(id)
+    checkpoint = Checkpoint.get_by_id(id, parent=None)
+
+    if checkpoint is None:
+        return not_found_msg, 404
+
+    return checkpoint_to_json(checkpoint)
 
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return 'Sorry, nothing at this URL.', 404
+    return not_found_msg, 404

@@ -12,30 +12,21 @@
                     }
                 }
             })
-            .state('editor', {
-                url: '/edit',
-                views: {
-                    content: {
-                        templateUrl: 'components/editor/editor.html',
-                        controller: 'EditorController'
-                    }
-                }
-            })
-            .state('new', {
-                url: '/new',
-                views: {
-                    content: {
-                        templateUrl: 'components/editor/editor.html',
-                        controller: 'EditorController'
-                    }
-                }
-            })
             .state('embed', {
                 url: '/embed',
                 views: {
                     content: {
                         templateUrl: 'components/embed/embed.html',
                         controller: 'EmbedController'
+                    }
+                }
+            })
+            .state('editor', {
+                url: '/:id',
+                views: {
+                    content: {
+                        templateUrl: 'components/editor/editor.html',
+                        controller: 'EditorController'
                     }
                 }
             });

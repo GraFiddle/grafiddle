@@ -68,8 +68,8 @@
         // Upload a file as data source
         //
         function uploadFile(file) {
-            $scope.datasetString = file;
-            $scope.toggleInputEditor();
+            $scope.checkpoint.datasetString = file;
+            $scope.toggleDataEditor();
         }
 
         // Toggle from data view
@@ -187,7 +187,8 @@
         // Add timestamp to options to redraw
         //
         function opdateOptions() {
-            $scope.checkpoint.options.updated = new Date();
+            // Is called to often, not only on resize
+            //$scope.checkpoint.options.updated = new Date();
         }
 
         // Trigger new render on resize

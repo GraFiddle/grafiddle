@@ -94,7 +94,7 @@ var app = {
     index: bases.app + 'index.html',
     images: bases.app + 'components/**/*.{png,jpg,jpeg,gif,svg,ico}',
     views: bases.app + 'components/**/*.html',
-    statics: ['app/.htaccess', 'app/favicon.ico', 'app/robots.txt']
+    statics: ['app/.htaccess', 'app/favicon.ico', 'app/robots.txt', bases.app + 'bower_components/ace-builds/src-noconflict/worker-json.js']
 };
 
 var dist = {

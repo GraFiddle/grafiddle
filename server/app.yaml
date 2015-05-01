@@ -6,6 +6,9 @@ threadsafe: yes
 module: default
 
 handlers:
+- url: /statics
+  static_dir: statics
+  
 - url: .*
   script: grafiddle.app
 

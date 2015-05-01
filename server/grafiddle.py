@@ -15,16 +15,17 @@ class Option(ndb.Model):
     option = ndb.JsonProperty(required=True)
 
 class Checkpoint(ndb.Model):
-    data = ndb.JsonProperty(required=False)
-    options = ndb.JsonProperty(required=False)
+    data = ndb.JsonProperty(required=True)
+    options = ndb.JsonProperty(required=True)
     author = ndb.StringProperty(required=False)
-    # base = ndb.KeyProperty(kind="Checkpoint")
+    base = ndb.KeyProperty(kind='Checkpoint')
     date = ndb.DateTimeProperty(auto_now_add=True)
 
 
 def checkpoint_to_json(cp):
     result = cp.to_dict()
     result['id'] = cp.key.id()
+    result['base'] = cp.base.id()
     result['date'] = cp.date.isoformat()
     return jsonify(result)
 
@@ -38,14 +39,23 @@ def static_proxy(path):
   return app.send_static_file(path)
 
 @app.route('/checkpoint', methods=['POST'])
-@crossdomain(origin='*')
+@crossdomain(origin='*', headers='content-type')
 def create_checkpoint():
     if not request.json:
         return 'Please provide data in JSON format', 400
 
+    # if 'data' not in request.json:
+    #     return 'You forgot to set "data"', 400
+    #
+    # if 'options' not in request.json:
+    #     return 'You forgot to set "options"', 400
+
+    base = ndb.Key("Checkpoint", int(request.json['base']))
+
     checkpoint = Checkpoint(data=request.json['data'],
                             options=request.json['options'],
-                            author=request.json['author'])
+                            author=request.json['author'],
+                            base=base)
     checkpoint.put()
 
     return checkpoint_to_json(checkpoint), 201

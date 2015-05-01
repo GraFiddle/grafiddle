@@ -13,7 +13,7 @@
                 }
             })
             .state('embed', {
-                url: '/embed',
+                url: '/:id/embed',
                 views: {
                     content: {
                         templateUrl: 'components/embed/embed.html',

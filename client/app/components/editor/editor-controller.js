@@ -23,6 +23,7 @@
             onLoad: function (_editor) {
                 _editor.setShowPrintMargin(false);
                 _editor.$blockScrolling = Infinity;
+                $scope.editors = _editor;
             }
         };
 
@@ -111,12 +112,14 @@
         function toggleOptionsUI() {
             $scope.showOptionsUI = !$scope.showOptionsUI;
             $scope.switchOptionsButtonTitle = $scope.showOptionsUI ? 'Edit as JSON' : 'Edit in GUI';
+            $scope.editors.resize();
+            $scope.editors.renderer.updateFull();
         }
 
         // Create the HTML UI representation of the options json
         //
         function updateOptionsUI(json) {
-            $scope.optionsUI = "test";
+            console.log("update options ui");
         }
 
         // Show the share sheet

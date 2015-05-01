@@ -60,7 +60,10 @@
                 </div>
 
                 <div ng-show="showOptionsUI" class="inputbox">
-                    <div ng-bind-html="optionsUI"></div>
+                    <div class="optionsuirows">
+                        <span>Rows</span><br />
+                        <p ng-repeat="value in checkpoint.options.rows"><input type="text" ng-model="value.key"> <span ng-if="value.type">{{value.type}}</span></p>
+                    </div>
                 </div>
 
                 <div ng-hide="showOptionsUI" ng-model="checkpoint.optionsString" ui-ace="aceJsonConfig"></div>

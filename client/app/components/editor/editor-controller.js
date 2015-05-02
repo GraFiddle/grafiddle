@@ -145,7 +145,7 @@
             $scope.showSharePopup = !$scope.showSharePopup;
             $scope.fiddleURL       = 'http://grafiddle.appspot.com/' + $state.params.id;
             $scope.fiddleChartURL  = 'http://grafiddle.appspot.com/' + $state.params.id + '.png';
-            $scope.fiddleEmbedCode = '<iframe width="100%" height="300" src="//grafiddle.appspot.com/embed/' + $state.params.id + '" allowfullscreen="allowfullscreen" frameborder="0"></iframe>';
+            $scope.fiddleEmbedCode = '<iframe width="100%" height="300" src="//grafiddle.appspot.com/' + $state.params.id + '/embed" allowfullscreen="allowfullscreen" frameborder="0"></iframe>';
         }
 
         // Allow share text fields to autoselect on focus

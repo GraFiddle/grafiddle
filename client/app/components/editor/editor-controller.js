@@ -55,6 +55,8 @@
                     .then(function(checkpoint) {
                         $scope.serverCheckpoint = checkpoint;
                         setCheckpoint(checkpoint);
+                        delete $scope.checkpoint.dataset;
+                        setCheckpoint(checkpoint);
                         $timeout(saveAsImage, 0);
                     })
                     .catch(function(){
@@ -202,46 +204,49 @@
                     "line": 14365.053
                 }
             ];
-            var schema = {
-            };
             var options = {
-                "rows": [
-                    {
+                "data": dataset,
+                "dimensions": {
+                    first: {
                         "key": "first",
                         "type": "bar",
                         "color": "green"
                     },
-                    {
+                    second: {
                         "key": "second",
                         "type": "bar",
                         "color": "orange"
                     },
-                    {
+                    third: {
                         "key": "third",
                         "type": "bar",
                         "color": "blue"
                     },
-                    {
+                    fouth: {
                         "key": "fouth",
                         "type": "bar",
                         "color": "red"
                     },
-                    {
+                    line: {
                         "key": "line",
                         "type": "spline",
                         "color": "black"
                     }
-                ],
-                "updated": "2015-05-01T11:56:50.707Z",
-                "xAxis": {
-                    "key": "day"
+                },
+                "chart": {
+                    "data": {
+                        "selection": {
+                            "enabled": true
+                        }
+                    },
+                    zoom: {
+                        enabled: true
+                    }
                 }
             };
 
             $scope.checkpoint.datasetString = '';
             $scope.checkpoint.dataset = dataset;
-            $scope.checkpoint.schemaString = '';
-            $scope.checkpoint.schema = schema;
             $scope.checkpoint.optionsString = '';
             $scope.checkpoint.options = options;
         }
@@ -260,15 +265,23 @@
         // Sync Object and String representation
         //
         function syncOptions() {
-            $scope.$watch('checkpoint.options', function (json) {
-                $scope.checkpoint.optionsString = $filter('json')(json);
+            $scope.$watch('checkpoint.options', function (options) {
+                var toParse = {
+                    dimensions: options.dimensions,
+                    chart: options.chart,
+                    state: options.state
+                };
+                $scope.checkpoint.optionsString = $filter('json')(toParse);
             }, true);
 
             $scope.$watch('checkpoint.optionsString', function (json) {
                 try {
-                    $scope.checkpoint.options = JSON.parse(json);
+                    var parsed = JSON.parse(json);
+                    parsed.data = $scope.checkpoint.dataset;
+                    $scope.checkpoint.options = parsed;
+                    console.log($scope.checkpoint.options);
                     $scope.wellFormedOptions = true;
-                    updateOptionsUI(json);
+                    //updateOptionsUI(json);
                 } catch (e) {
                     $scope.wellFormedOptions = false;
                 }
@@ -279,11 +292,13 @@
         //
         function syncDataset() {
             $scope.$watch('checkpoint.dataset', function (json) {
+                console.log('update dataset string');
                 $scope.checkpoint.datasetString = $filter('json')(json);
-                opdateOptions();
+                //opdateOptions();
             }, true);
 
             $scope.$watch('checkpoint.datasetString', function (json) {
+                console.log('update dataset object');
                 try {
                     $scope.checkpoint.dataset = JSON.parse(json);
                     $scope.wellFormedDataset = true;

@@ -8,7 +8,6 @@
       'grafiddle.templates',
       'ngResource',
       'ngSanitize',
-      'ngAnimate',
       'ui.router',
       'ui.layout',
       'ui.ace',

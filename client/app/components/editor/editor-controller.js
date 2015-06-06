@@ -1,46 +1,23 @@
-(function () {
+(function() {
 
-    function EditorController($scope, $filter, $state, $window, $timeout, CheckpointEndpoint) {
+    function EditorController($scope, $state, $window, $timeout, CheckpointEndpoint, EditorService) {
 
-        $scope.showDataEditor = false;
-        $scope.showOptionsUI  = false;
+        // share
         $scope.showSharePopup = false;
-        $scope.switchDataButtonTitle    = 'Manual data entry';
-        $scope.switchOptionsButtonTitle = 'Edit in GUI';
-        $scope.toggleDataEditor = toggleDataEditor;
-        $scope.toggleOptionsUI  = toggleOptionsUI;
-        $scope.sharePopup       = sharePopup;
-        $scope.onShareTextClick = onShareTextClick;
-        $scope.addOption = addOption;
-        $scope.title = '';
-        $scope.author = '';
-
         $scope.share = share;
-        $scope.save = save;
+        $scope.sharePopup = sharePopup;
+        $scope.onShareTextClick = onShareTextClick;
+
+        // upload data
+        $scope.showDataEditor = true;
+        $scope.switchDataButtonTitle = 'Manual data entry';
+        $scope.toggleDataEditor = toggleDataEditor;
         $scope.uploadFile = uploadFile;
 
-        $scope.optionsUIrowTypeOptions = [
-            { label: 'line', value: 1 },
-            { label: 'spline', value: 2 },
-            { label: 'bar', value: 3 },
-            { label: 'scatter', value: 4 },
-            { label: 'area', value: 5 },
-            { label: 'area-spline', value: 6 },
-            { label: 'step', value: 7 },
-            { label: 'area-step', value: 8 },
-            { label: 'step', value: 9 }
-        ];
-
+        // save
+        $scope.save = save;
         $scope.checkpoint = {};
-        $scope.aceJsonConfig = {
-            mode: 'json',
-            useWrapMode: false,
-            onLoad: function (_editor) {
-                _editor.setShowPrintMargin(false);
-                _editor.$blockScrolling = Infinity;
-                $scope.editors = _editor;
-            }
-        };
+        $scope.aceJsonConfig = EditorService.aceJsonConfig;
 
         activate();
 
@@ -49,69 +26,54 @@
         function activate() {
 
             if ($state.params.id) {
-                CheckpointEndpoint
-                    .get({id: $state.params.id})
-                    .$promise
-                    .then(function(checkpoint) {
-                        $scope.serverCheckpoint = checkpoint;
-                        setCheckpoint(checkpoint);
-                        delete $scope.checkpoint.dataset;
-                        setCheckpoint(checkpoint);
-                        $timeout(saveAsImage, 0);
-                    })
-                    .catch(function(){
-                        $state.go('editor', {id: ''});
-                    });
+                loadCheckpoint();
             } else {
                 loadDefaultData();
-                $timeout(saveAsImage, 0);
             }
-            syncOptions();
-            syncDataset();
-            //updateOnResize();
+
+            // start watcher
+            EditorService.syncOptionsString($scope, $scope.checkpoint);
+            EditorService.syncOptions($scope, $scope.checkpoint);
+            EditorService.syncDataString($scope, $scope.checkpoint);
+            EditorService.syncData($scope, $scope.checkpoint);
         }
 
-        function saveAsImage() {
-            canvg(document.getElementById('canvas'), d3.select(".angularchart").node().innerHTML);
-            $scope.asImage = document.getElementById('canvas').toDataURL();
-            $scope.metadata.og['og:image'] = $scope.asImage;
-        }
 
-        // Save the current Version
-        //
-        function save() {
-            CheckpointEndpoint.save({
-                "data": $scope.checkpoint.dataset,
-                "options": $scope.checkpoint.options,
-                "author": $scope.author,
-                "base": $scope.serverCheckpoint && $scope.serverCheckpoint.id,
-                "title": $scope.title
-            })
-                .$promise
-                .then(function (checkpoint) {
-                    console.log('saved checkpoint: ', checkpoint);
-                    $state.go('editor', {id: checkpoint.id});
-                })
-                .catch(function (e) {
-                    console.error('save failed', e);
-                })
-        }
-
+        /*
+         * SHARE
+         */
         // Share the fiddle
         //
         function share(target) {
-            fiddleURL       = 'http://grafiddle.appspot.com/' + $state.params.id;
-            if(target == 'FB') {
+            fiddleURL = 'http://grafiddle.appspot.com/' + $state.params.id;
+            if (target == 'FB') {
                 $window.open('https://www.facebook.com/sharer/sharer.php?u=' + fiddleURL, '_blank');
             }
-            if(target == 'Twitter') {
+            if (target == 'Twitter') {
                 $window.open('https://twitter.com/intent/tweet?text=Check%20out%20this%20sweet%20grafiddle%20&url=' + fiddleURL, '_blank');
             }
-            if(target == 'E-Mail') {
+            if (target == 'E-Mail') {
                 $window.location = 'mailto:a@b.cd?subject=Check%20out%20this%20awesome%20Grafiddle&body=' + fiddleURL;
             }
         }
+        // Show the share sheet
+        //
+        function sharePopup() {
+            $scope.showSharePopup = !$scope.showSharePopup;
+            $scope.fiddleURL = 'http://grafiddle.appspot.com/' + $state.params.id;
+            $scope.fiddleChartURL = 'http://grafiddle.appspot.com/' + $state.params.id + '.png';
+            $scope.fiddleEmbedCode = '<iframe width="100%" height="300" src="//grafiddle.appspot.com/' + $state.params.id + '/embed" allowfullscreen="allowfullscreen" frameborder="0"></iframe>';
+        }
+        // Allow share text fields to autoselect on focus
+        //
+        function onShareTextClick($event) {
+            $event.target.select();
+        }
 
+
+        /*
+         * DATA
+         */
         // Upload a file as data source
         //
         function uploadFile(file) {
@@ -126,57 +88,20 @@
             $scope.switchDataButtonTitle = $scope.showDataEditor ? 'Back to input dialog' : 'Manual data entry';
         }
 
-        // Toggle from json-option view
-        //
-        function toggleOptionsUI() {
-            $scope.showOptionsUI = !$scope.showOptionsUI;
-            $scope.switchOptionsButtonTitle = $scope.showOptionsUI ? 'Edit as JSON' : 'Edit in GUI';
-            $scope.editors.resize();
-            $scope.editors.renderer.updateFull();
-        }
 
-        // Create the HTML UI representation of the options json
-        //
-        function updateOptionsUI(json) {
-            console.log("update options ui");
-        }
-
-        // Show the share sheet
-        //
-        function sharePopup() {
-            $scope.showSharePopup = !$scope.showSharePopup;
-            $scope.fiddleURL       = 'http://grafiddle.appspot.com/' + $state.params.id;
-            $scope.fiddleChartURL  = 'http://grafiddle.appspot.com/' + $state.params.id + '.png';
-            $scope.fiddleEmbedCode = '<iframe width="100%" height="300" src="//grafiddle.appspot.com/' + $state.params.id + '/embed" allowfullscreen="allowfullscreen" frameborder="0"></iframe>';
-        }
-
-        // Allow share text fields to autoselect on focus
-        //
-        function onShareTextClick($event) {
-            $event.target.select();
-        };
-
-        
-        // Insert default data
-        //
-        function addOption(option) {
-            if(option == 'row')
-            {
-                $scope.checkpoint.options.rows = $scope.checkpoint.options.rows.concat([{key : "new row"}])
-            }
-        }
-
-
+        /*
+         * CHECKPOINT
+         */
         // Insert default data
         //
         function loadDefaultData() {
-            var dataset = [
+            var data = [
                 {
                     "day": "2013-01-02",
                     "first": 12365.053,
                     "second": 1600,
                     "third": 1300,
-                    "fouth": 1500,
+                    "fourth": 1500,
                     "line": 6000.295202
                 },
                 {
@@ -184,7 +109,7 @@
                     "first": 1203.053,
                     "second": 16000,
                     "third": 1300,
-                    "fouth": 1500,
+                    "fourth": 1500,
                     "line": 13365.053
                 },
                 {
@@ -192,7 +117,7 @@
                     "first": 1235.053,
                     "second": 1600,
                     "third": 13000,
-                    "fouth": 1500,
+                    "fourth": 1500,
                     "line": 9365.053
                 },
                 {
@@ -200,30 +125,26 @@
                     "first": 1265.053,
                     "second": 1600,
                     "third": 1300,
-                    "fouth": 15000,
+                    "fourth": 15000,
                     "line": 14365.053
                 }
             ];
             var options = {
-                "data": dataset,
+                "data": data,
                 "dimensions": {
                     first: {
-                        "key": "first",
                         "type": "bar",
                         "color": "green"
                     },
                     second: {
-                        "key": "second",
                         "type": "bar",
                         "color": "orange"
                     },
                     third: {
-                        "key": "third",
                         "type": "bar",
                         "color": "blue"
                     },
-                    fouth: {
-                        "key": "fouth",
+                    fourth: {
                         "type": "bar",
                         "color": "red"
                     },
@@ -244,88 +165,58 @@
                     }
                 }
             };
+            var checkpoint = {
+                options: options
+            };
+            setCheckpoint(checkpoint);
+            $timeout(saveAsImage, 0);
+        }
 
-            $scope.checkpoint.datasetString = '';
-            $scope.checkpoint.dataset = dataset;
-            $scope.checkpoint.optionsString = '';
-            $scope.checkpoint.options = options;
+        function loadCheckpoint() {
+            CheckpointEndpoint
+                .get({id: $state.params.id})
+                .$promise
+                .then(function(checkpoint) {
+                    $scope.serverCheckpoint = checkpoint;
+                    setCheckpoint(checkpoint);
+                    $timeout(saveAsImage, 0);
+                })
+                .catch(function() {
+                    $state.go('editor', {id: ''});
+                });
         }
 
         function setCheckpoint(checkpoint) {
-            $scope.checkpoint.datasetString = '';
-            $scope.checkpoint.dataset = checkpoint.data;
-            $scope.checkpoint.schemaString = '';
-            $scope.checkpoint.schema = {};
+            $scope.checkpoint.dataString = '';
             $scope.checkpoint.optionsString = '';
             $scope.checkpoint.options = checkpoint.options;
-            $scope.title = checkpoint.title;
-            $scope.author = checkpoint.author;
         }
 
-        // Sync Object and String representation
+        // Save the current Version
         //
-        function syncOptions() {
-            $scope.$watch('checkpoint.options', function (options) {
-                var toParse = {
-                    dimensions: options.dimensions,
-                    chart: options.chart,
-                    state: options.state
-                };
-                $scope.checkpoint.optionsString = $filter('json')(toParse);
-            }, true);
-
-            $scope.$watch('checkpoint.optionsString', function (json) {
-                try {
-                    var parsed = JSON.parse(json);
-                    parsed.data = $scope.checkpoint.dataset;
-                    $scope.checkpoint.options = parsed;
-                    console.log($scope.checkpoint.options);
-                    $scope.wellFormedOptions = true;
-                    //updateOptionsUI(json);
-                } catch (e) {
-                    $scope.wellFormedOptions = false;
-                }
-            }, true);
+        function save() {
+            CheckpointEndpoint.save({
+                "base": $scope.serverCheckpoint && $scope.serverCheckpoint.id,
+                "data": [], // is required by the server
+                "options": $scope.checkpoint.options,
+                "author": $scope.author,
+                "title": $scope.title
+            })
+                .$promise
+                .then(function(checkpoint) {
+                    $state.go('editor', {id: checkpoint.id});
+                })
+                .catch(function(e) {
+                    console.error('save failed', e);
+                });
         }
 
-        // Sync Object and String representation
-        //
-        function syncDataset() {
-            $scope.$watch('checkpoint.dataset', function (json) {
-                console.log('update dataset string');
-                $scope.checkpoint.datasetString = $filter('json')(json);
-                //opdateOptions();
-            }, true);
 
-            $scope.$watch('checkpoint.datasetString', function (json) {
-                console.log('update dataset object');
-                try {
-                    $scope.checkpoint.dataset = JSON.parse(json);
-                    $scope.wellFormedDataset = true;
-                } catch (e) {
-                    $scope.wellFormedDataset = false;
-                }
-            }, true);
-        }
-
-        // Add timestamp to options to redraw
-        //
-        function opdateOptions() {
-            // Is called to often, not only on resize
-            if ($scope.checkpoint && $scope.checkpoint.options) {
-                $scope.checkpoint.options.updated = new Date();
-            }
-        }
-
-        // Trigger new render on resize
-        //
-        function updateOnResize() {
-            var myElement = document.getElementById('chartArea');
-            addResizeListener(myElement, opdateOptions);
-
-            $scope.$on("$destroy", function () {
-                removeResizeListener(myElement, opdateOptions);
-            });
+        function saveAsImage() {
+            // TODO fix me
+            //canvg(document.getElementById('canvas'), d3.select(".angularchart").node().innerHTML);
+            //$scope.asImage = document.getElementById('canvas').toDataURL();
+            //$scope.metadata.og['og:image'] = $scope.asImage;
         }
 
     }

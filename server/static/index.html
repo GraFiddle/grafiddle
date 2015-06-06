@@ -1,0 +1,38 @@
+<!doctype html >
+<!--[if lt IE 7]>      <html ng-app="grafiddle" ng-controller="AppController" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html ng-app="grafiddle" ng-controller="AppController" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html ng-app="grafiddle" ng-controller="AppController" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html ng-app="grafiddle" ng-controller="AppController" class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>grafiddle</title>
+    <meta name="description" content="grafiddle">
+    <meta name="viewport" content="width=device-width">
+    <meta name="version" content="0.0.0">
+
+    <meta ng-repeat="(property, content) in metadata.og" property="{{property}}" content="{{content}}">
+    <meta property="og:site_name" content="stomt">
+
+    <base href="/">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- endinject -->
+  </head>
+  <body>
+
+    <!-- content of the page -->
+    <div style="height: 100%;" ui-view="content"></div>
+
+    <!-- inject:js -->
+    <script src="js/vendor.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/partials.js"></script>
+    <script src="js/scripts.js"></script>
+    <!-- endinject -->
+  </body>
+</html>

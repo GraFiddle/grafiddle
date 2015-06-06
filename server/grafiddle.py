@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, Response
 from json import dumps
 from google.appengine.ext import ndb
 from options_handler import crossdomain
+import urllib,json
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -74,6 +75,18 @@ def create_checkpoint():
 
     return jsonify(prepare_for_json(checkpoint)), 201
 
+@app.route('/url', methods=['POST'])
+@crossdomain(origin='*', headers='content-type')
+def fetch_url():
+    if not request.form:
+        return 'Please provide url string', 400
+
+    if 'url' not in request.form:
+        return 'You forgot to set "url"', 400
+
+    response = urllib.urlopen(request.form['url']).read()
+
+    return response
 
 @app.errorhandler(404)
 def page_not_found(e):

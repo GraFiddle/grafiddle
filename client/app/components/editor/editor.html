@@ -1,17 +1,26 @@
 <div ui-layout>
+
+    <!-- header -->
     <div ui-layout-container class="header" size="50px" max-size="50px" min-size="50px" >
+
+        <!-- logo -->
         <a href ui-sref="editor" class="header-logo left" title="grafiddle"></a>
+
+        <!-- save / fork -->
         <button type="button" class="btn left" ng-show="serverCheckpoint" ng-click="save()">Fork</button>
         <button type="button" class="btn left" ng-show="!serverCheckpoint" ng-click="save()">Save</button>
+
+        <!-- share -->
         <button type="button" class="btn btn-primary left" ng-show="serverCheckpoint" ng-click="sharePopup()">Share</button>
+
+        <!-- tree -->
         <a href ui-sref="tree({id: serverCheckpoint.id})" ng-show="serverCheckpoint" class="link left" >See Revisions</a>
 
-        <input type="text" class="input input-title" ng-model="title" placeholder="Enter the Title">
-        <input type="text" class="input input-author" ng-model="author" placeholder="Your Name">
-
-        <button type="button" class="btn right">Login</button>
-        <button type="button" class="btn btn-primary right">Sign Up</button>
+        <!-- login -->
+        <button type="button" class="btn btn-primary right">Sign in / Sign up</button>
     </div>
+
+    <!-- share popup -->
     <div ng-show="showSharePopup" class="sharebox">
         <div class="sharerow">Direct link to this grafiddle:<br /><input ng-click="onShareTextClick($event)" type="text" ng-model="fiddleURL"></div>
         <div class="sharerow">This grafiddle chart as a PNG:<br /><input ng-click="onShareTextClick($event)" type="text" ng-model="fiddleChartURL"></div>
@@ -23,19 +32,24 @@
         </div>
     </div>
 
+
+    <!-- the chart -->
     <div ui-layout-container class="chartArea" id="chartArea" size="60%">
+        <!-- angular-chart directive -->
         <angular-chart
             class="angularchart"
             options="checkpoint.options">
         </angular-chart>
 
+        <!-- for image rendering -->
         <canvas id="canvas" style="display: none"></canvas>
-
     </div>
+
 
     <div ui-layout-container>
         <div ui-layout="{flow : 'column'}" >
 
+            <!-- edit data -->
             <div ui-layout-container class="dataArea">
                 <div style="position: absolute; top: 10px; right: 10px; z-index: 999;">
                     <button class="btn btn-primary" style="opacity: 0.85;" ng-click="toggleDataEditor()">{{switchDataButtonTitle}}</button>
@@ -52,27 +66,12 @@
                     </div>
                 </div>
 
-                <div ng-show="showDataEditor" ng-model="checkpoint.datasetString" ui-ace="aceJsonConfig"></div>
+                <div ng-show="showDataEditor" ng-model="checkpoint.dataString" ui-ace="aceJsonConfig"></div>
             </div>
 
+            <!-- edit options -->
             <div ui-layout-container class="optionsArea">
-                <div style="position: absolute; top: 10px; right: 10px; z-index: 999;">
-                    <button class="btn btn-primary" style="opacity: 0.85;" ng-click="toggleOptionsUI()">{{switchOptionsButtonTitle}}</button>
-                </div>
-
-                <div ng-show="showOptionsUI" class="inputbox">
-                    <div class="optionsuirows">
-                        <span>Rows</span> <span style="font-size: small;">(<span ng-click="addOption('row')" style="font-weight: bold;">add</span>)</span><br />
-                        <p ng-repeat="value in checkpoint.options.rows">Key: <input type="text" ng-model="value.key"> Type: <select ng-model="value.type" ng-options="opt.label as opt.label for opt in optionsUIrowTypeOptions"></select></p>
-                    </div>
-                    <div class="optionsuirows" ng-if="checkpoint.options.size">
-                        <span>Size</span><br />
-                        <p>Height: <input type="text" ng-model="checkpoint.options.size.height"></p>
-                        <p>Width: <input type="text" ng-model="checkpoint.options.size.width"></p>
-                    </div>
-                </div>
-
-                <div ng-hide="showOptionsUI" ng-model="checkpoint.optionsString" ui-ace="aceJsonConfig"></div>
+                <div ng-model="checkpoint.optionsString" ui-ace="aceJsonConfig"></div>
             </div>
 
         </div>

@@ -168,7 +168,7 @@
             var checkpoint = {
                 options: options
             };
-            setCheckpoint(checkpoint);
+            EditorService.setCheckpoint($scope.checkpoint, checkpoint);
             $timeout(saveAsImage, 0);
         }
 
@@ -178,7 +178,7 @@
                 .$promise
                 .then(function(checkpoint) {
                     $scope.serverCheckpoint = checkpoint;
-                    setCheckpoint(checkpoint);
+                    EditorService.setCheckpoint($scope.checkpoint, checkpoint);
                     $timeout(saveAsImage, 0);
                 })
                 .catch(function() {
@@ -186,11 +186,7 @@
                 });
         }
 
-        function setCheckpoint(checkpoint) {
-            $scope.checkpoint.dataString = '';
-            $scope.checkpoint.optionsString = '';
-            $scope.checkpoint.options = checkpoint.options;
-        }
+
 
         // Save the current Version
         //

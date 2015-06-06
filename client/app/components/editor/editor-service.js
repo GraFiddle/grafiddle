@@ -1,12 +1,12 @@
-(function () {
+(function() {
 
     'use strict';
 
     function EditorService($filter) {
         var aceJsonConfig = {
             mode: 'json',
-                useWrapMode: false,
-                onLoad: function(_editor) {
+            useWrapMode: false,
+            onLoad: function(_editor) {
                 _editor.setShowPrintMargin(false);
                 _editor.$blockScrolling = Infinity;
             }
@@ -17,18 +17,23 @@
             syncOptionsString: syncOptionsString,
             syncOptions: syncOptions,
             syncDataString: syncDataString,
-            syncData: syncData
+            syncData: syncData,
+            setCheckpoint: setCheckpoint
         };
 
         /////////
 
         function syncOptionsString(scope, checkpoint) {
             scope.$watch(function() {
-                return {
-                    dimensions: checkpoint.options.dimensions,
-                    chart: checkpoint.options.chart,
-                    state: checkpoint.options.state
-                };
+                var compare = {};
+                if (checkpoint.options) {
+                    compare = {
+                        dimensions: checkpoint.options.dimensions,
+                        chart: checkpoint.options.chart,
+                        state: checkpoint.options.state
+                    };
+                }
+                return compare;
             }, function(newOptions) {
                 if (!newOptions) {
                     return;
@@ -61,7 +66,7 @@
 
         function syncDataString(scope, checkpoint) {
             scope.$watch(function() {
-                return checkpoint.options.data;
+                return checkpoint.options ? checkpoint.options.data : {};
             }, function(newData) {
                 if (!newData) {
                     return;
@@ -84,7 +89,11 @@
             });
         }
 
-
+        function setCheckpoint(oldCheckpoint, newCheckpoint) {
+            oldCheckpoint.dataString = '';
+            oldCheckpoint.optionsString = '';
+            oldCheckpoint.options = newCheckpoint.options;
+        }
 
     }
 

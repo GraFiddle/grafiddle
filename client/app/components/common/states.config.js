@@ -47,7 +47,7 @@
             // requesting unknown page unequal to '/'
             var path = $location.path();
             if (path !== '/') {
-                $injector.get('$state').go('404');
+                $injector.get('$state').go('');
                 return path; // this trick allows to show the error page on unknown address
             }
 

@@ -1,29 +1,27 @@
 <div ui-layout>
     <div>
         <ul class="embedview">
-                <li ng-class="{active:isView('chart')}" class="embedview" ng-click="setView('chart')"><span>Graph</span></li>
-                <li ng-class="{active:isView('dataset')}" class="embedview" ng-click="setView('dataset')"><span>Data</span></li>
-                <li ng-class="{active:isView('options')}" class="embedview" ng-click="setView('options')"><span>Options</span></li>
+                <li ng-class="{active: embedView === 'chart'}" class="embedview" ng-click="setView('chart')"><span>Graph</span></li>
+                <li ng-class="{active: embedView === 'data'}" class="embedview" ng-click="setView('data')"><span>Data</span></li>
+                <li ng-class="{active: embedView === 'options'}" class="embedview" ng-click="setView('options')"><span>Options</span></li>
         </ul>
         <div style="float: right;">
             <a href ui-sref="editor({id: serverCheckpoint.id})" style="font-size: small;">Edit in grafiddle</a></div>
     </div>
 
-    <div ng-show="embedView == 'chart'" class="embedview">
-        <angularchart
+    <div ng-show="embedView === 'chart'" class="embedview">
+        <angular-chart
             class="angularchart"
-            dataset="checkpoint.dataset"
-            schema="checkpoint.schema"
             options="checkpoint.options">
-        </angularchart>
+        </angular-chart>
     </div>
 
-    <div ng-show="embedView == 'options'" class="embedview">
-        <div ng-model="checkpoint.optionsString" ui-ace="optionsAceConfig"></div>
+    <div ng-if="embedView === 'options'" class="embedview">
+        <div ng-model="checkpoint.optionsString" ui-ace="aceJsonConfig"></div>
     </div>
 
-    <div ng-show="embedView == 'dataset'" class="embedview">
-        <div ng-model="checkpoint.datasetString" ui-ace="datasetAceConfig"></div>
+    <div ng-if="embedView === 'data'" class="embedview">
+        <div ng-model="checkpoint.dataString" ui-ace="aceJsonConfig"></div>
     </div>
 
 </div>

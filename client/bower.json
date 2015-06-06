@@ -7,7 +7,7 @@
     "angular-resource": "~1.4.x",
     "angular-sanitize": "~1.4.x",
     "angular-ui-router": "~0.2.11",
-    "angular-chart": "git@github.com:maxklenk/angular-chart.git#feature/0.3.0",
+    "angular-chart": "~0.3.0",
     "es5-shim": "4.1.0",
     "json3": "~3.3.1",
     "angular-ui-layout": "~1.0.5",

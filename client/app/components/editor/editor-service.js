@@ -9,6 +9,7 @@
       onLoad: function (_editor) {
         _editor.setShowPrintMargin(false);
         _editor.$blockScrolling = Infinity;
+        _editor.renderer.setShowGutter(false);
       }
     };
 

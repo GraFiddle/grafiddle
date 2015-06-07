@@ -19,14 +19,12 @@ $gray-light: lighten($gray, 20%);
 body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 h1, h2, h3, h4, h5 {
   font-family: 'Arvo', serif;
 }
-
-
 
 /**
   Share Popup
@@ -337,11 +335,6 @@ angularchart {
   margin: auto;
 }
 
-.optionsArea, .dataArea {
-  border: solid 1px gray;
-}
-
-
 
 /**
  Layout
@@ -351,14 +344,41 @@ html, body, .content {
   margin: 0;
 }
 .content {
-  max-width: 1170px;
+  max-width: 1300px;
   margin: auto;
-  padding: 1em;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+.content-left {
+  float: left;
+  width: 80%;
+  height: 100%;
+  padding-right: 20px;
+}
+.content-right {
+  float: right;
+  width: 20%;
+  height: 100%;
 }
 .chartArea {
   position: relative;
+  height: 50%;
+}
+.angularchart {
+  position: relative;
   top: 45%;
   transform: translateY(-50%);
+}
+.optionsArea {
+  padding-left: 20px;
+  border-left: 2px solid $gray-light;
+  height: 100%;
+}
+.dataArea {
+  height: 50%;
+  padding-top: 20px;
+  border-top: 2px solid $gray-light;
+  position: relative;
 }
 .showConfig {
   position: absolute;

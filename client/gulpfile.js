@@ -105,6 +105,8 @@ var dist = {
 
 var mockFile = 'mocks.js';
 
+var sourcemaps_path = '.';
+
 // SERVING CONFIG
 //
 var port = 8000;
@@ -151,7 +153,7 @@ gulp.task('scripts', function() {
     .pipe(remember('scriptsCache'))
     .pipe(concat(scriptsFile))
     .pipe(gulpif(production, uglify()))
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write(sourcemaps_path))
     .pipe(gulp.dest(dist.js));
 });
 
@@ -167,7 +169,7 @@ gulp.task('vendorScripts', ['bower:install', 'bower:prune'], function() {
     .pipe(newer(dist.js + vendorFile))
     .pipe(concat(vendorFile))
     .pipe(gulpif(production, uglify()))
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write(sourcemaps_path))
     .pipe(gulp.dest(dist.js));
 });
 
@@ -185,7 +187,7 @@ gulp.task('mockScripts', function() {
     .pipe(ngAnnotate())
     .pipe(remember('mockScriptsCache'))
     .pipe(concat(mockFile))
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write(sourcemaps_path))
     .pipe(gulp.dest(dist.js));
 });
 
@@ -222,7 +224,7 @@ gulp.task('vendorStyles', ['bower:install', 'bower:prune'], function() {
     .pipe(minifyCSS({
       keepSpecialComments: 0
     }))
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write(sourcemaps_path))
     .pipe(gulp.dest(dist.css));
 });
 

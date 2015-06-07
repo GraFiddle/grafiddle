@@ -32,7 +32,6 @@ var argv = require('yargs').argv,
     docco = require('gulp-docco'),
     protractor = require('gulp-protractor').protractor,
     exit = require('gulp-exit'),
-    maven = require('gulp-maven-deploy'),
     jshint = require('gulp-jshint'),
     runSequence = require('run-sequence'),
     ngHtml2Js = require('gulp-ng-html2js'),
@@ -116,7 +115,6 @@ var testingPort = 9001;
 //
 var includeMock = false;
 var appName = 'grafiddle';
-var appBase = '';
 
 
 // BOWER DEPENDENCIES
@@ -289,8 +287,7 @@ function injectIndex() {
         .pipe(gulpInject(gulp.src(jsFiles, srcOptions), extend({}, injectOptions)))
         .pipe(preprocess({
             context: {
-                APP: appName,
-                BASE: appBase
+                APP: appName
             }
         }))
         .pipe(gulp.dest(destinationDir));
@@ -437,10 +434,6 @@ function enableMock() {
     appName = 'onedataMock';
 }
 
-function enableDeploy() {
-    appBase = '${context.path}';
-}
-
 
 // gulp clean
 // remove build (erase dist/ folder recursively)
@@ -456,39 +449,6 @@ gulp.task('build', ['images', 'index', 'fonts', 'partials', 'statics']);
 gulp.task('build:mock', function () {
     enableMock();
     gulp.start(['build']);
-});
-gulp.task('build-deploy', function () {
-    enableDeploy();
-    gulp.start(['build']);
-});
-
-
-gulp.task('maven-deploy', ['build-deploy'], function() {
-    gulp.src('.')
-        .pipe(maven.deploy({
-            'config': {
-                'groupId': 'de.onelogic.forecasting.client',
-                'artifactId': 'Client',
-                'type': 'zip',
-                'repositories': [
-                    {
-                        'id': 'nexus',
-                        'url': 'http://ci.intranet.onelogic.de:8081/nexus/content/repositories/releases/'
-                    }
-                ]
-            }
-        }));
-});
-
-gulp.task('maven-deploy-local', ['build-deploy'], function() {
-    gulp.src('.')
-        .pipe(maven.install({
-            'config': {
-                'groupId': 'de.onelogic.forecasting.client',
-                'artifactId': 'Client',
-                'type': 'zip'
-            }
-        }));
 });
 
 

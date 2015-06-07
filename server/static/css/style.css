@@ -1,5 +1,14 @@
+/**
+  Colors
+*************************************/
 body {
   margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Arvo', serif;
 }
 
 /**
@@ -84,7 +93,6 @@ div.inputbox {
   outline: none;
   cursor: inherit;
   display: block;
-  font-size: 14px;
   font-weight: 400;
   line-height: 1.42857143;
   text-align: center;
@@ -139,31 +147,54 @@ li.embedview {
 
 .btn {
   display: inline-block;
-  padding: 6px 12px;
-  margin-bottom: 0;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.42857143;
+  position: relative;
+  height: 2em;
+  line-height: 2em;
+  padding: 0 1em;
+  outline: 0;
+  color: #999999;
+  background: transparent;
   text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
+  text-decoration: none;
   cursor: pointer;
+  border: 1px solid #999999;
+  vertical-align: bottom;
+  white-space: nowrap;
+  text-rendering: auto;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  background-color: #C0C0C0;
+  box-sizing: border-box;
+  border-radius: 999em;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-font-feature-settings: "liga" on;
+  transition: 100ms background-color,100ms border-color,100ms color;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
+.btn:hover {
+  color: #666666;
+  border-color: #666666;
+}
+
+.btn--primary {
+  color: #8de0a8;
+  border-color: #8de0a8;
+}
+
+.btn--primary:hover {
+  background: transparent;
+  border-color: #3DCA6A;
+  color: #3DCA6A;
+}
+
+.btn--big {
+  font-size: 200%;
 }
 
 .input {
@@ -171,7 +202,6 @@ li.embedview {
   width: 200px;
   height: 34px;
   padding: 6px 12px;
-  font-size: 14px;
   line-height: 1.42857143;
   color: #555;
   background-color: #fff;
@@ -193,8 +223,13 @@ li.embedview {
   float: left;
 }
 
-body {
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  padding: 5px;
 }
 
 .header .btn {
@@ -226,7 +261,7 @@ body {
   background-image: url("../images/logo.png");
   background-size: contain;
   height: 40px;
-  width: 79px;
+  width: 40px;
 }
 .header-logo h1 {
   display: inline;
@@ -240,6 +275,35 @@ angularchart {
 
 .optionsArea, .dataArea {
   border: solid 1px gray;
+}
+
+/**
+ Layout
+ */
+html, body, .content {
+  height: 100%;
+  margin: 0;
+}
+
+.content {
+  max-width: 1170px;
+  margin: auto;
+  padding: 1em;
+}
+
+.chartArea {
+  position: relative;
+  top: 45%;
+  transform: translateY(-50%);
+}
+
+.showConfig {
+  position: absolute;
+  bottom: 40px;
+  text-align: center;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 
 .node {

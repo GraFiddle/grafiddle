@@ -91,7 +91,7 @@ def fetch_url():
         return json.dumps(decoded, sort_keys=True, indent=4)
 
     except (ValueError, KeyError, TypeError):
-        return "JSON format error"
+        return "JSON format error", 400
 
 
 

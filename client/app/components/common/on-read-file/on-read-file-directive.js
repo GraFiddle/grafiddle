@@ -1,44 +1,44 @@
-(function () {
+(function() {
 
-    'use strict';
+  'use strict';
 
-    /**
-     * @ngdoc directive
-     * @name grafiddle.directive:onReadFile
-     * @requires $parse
-     * @requires $log
-     * @restrict A
-     *
-     * @description
-     * The `onReadFile` directive opens up a FileReader dialog to upload files from the local filesystem.
-     *
-     * @element ANY
-     * @ngInject
-     */
-    function onReadFile($parse) {
-        return {
-            restrict: 'A',
-            scope: false,
-            link: function(scope, element, attrs) {
-                var fn = $parse(attrs.onReadFile);
+  angular
+    .module('grafiddle')
+    .directive('onReadFile', onReadFile);
 
-                element.on('change', function(onChangeEvent) {
-                    var reader = new FileReader();
+  /**
+   * @ngdoc directive
+   * @name grafiddle.directive:onReadFile
+   * @requires $parse
+   * @requires $log
+   * @restrict A
+   *
+   * @description
+   * The `onReadFile` directive opens up a FileReader dialog to upload files from the local filesystem.
+   *
+   * @element ANY
+   * @ngInject
+   */
+  function onReadFile($parse) {
+    return {
+      restrict: 'A',
+      scope: false,
+      link: function (scope, element, attrs) {
+        var fn = $parse(attrs.onReadFile);
 
-                    reader.onload = function(onLoadEvent) {
-                        scope.$apply(function() {
-                            fn(scope, {$fileContent:onLoadEvent.target.result});
-                        });
-                    };
+        element.on('change', function (onChangeEvent) {
+          var reader = new FileReader();
 
-                    reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
-                });
-            }
-        };
-    }
+          reader.onload = function (onLoadEvent) {
+            scope.$apply(function () {
+              fn(scope, {$fileContent: onLoadEvent.target.result});
+            });
+          };
 
-    angular
-        .module('grafiddle')
-        .directive('onReadFile', onReadFile);
+          reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
+        });
+      }
+    };
+  }
 
 })();

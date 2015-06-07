@@ -1,22 +1,22 @@
-(function () {
+(function() {
 
-    'use strict';
+  'use strict';
 
-    function CheckpointEndpoint($resource, ENV) {
-        return $resource(ENV.api + 'checkpoint/:id', {
-            id: '@id'
-        }, {
-            save: {
-                method: 'POST'
-            },
-            get: {
-                method: 'GET'
-            }
-        });
-    }
+  angular
+    .module('grafiddle')
+    .factory('CheckpointEndpoint', CheckpointEndpoint);
 
-    angular
-        .module('grafiddle')
-        .factory('CheckpointEndpoint', CheckpointEndpoint);
+  function CheckpointEndpoint($resource, ENV) {
+    return $resource(ENV.api + 'checkpoint/:id', {
+      id: '@id'
+    }, {
+      save: {
+        method: 'POST'
+      },
+      get: {
+        method: 'GET'
+      }
+    });
+  }
 
 })();

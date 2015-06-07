@@ -1,11 +1,13 @@
-(function () {
+(function() {
 
-    function AppController() {
+  'use strict';
 
-    }
+  angular
+    .module('grafiddle')
+    .controller('AppController', AppController);
 
-    angular
-        .module('grafiddle')
-        .controller('AppController', AppController);
+  function AppController() {
+
+  }
 
 })();

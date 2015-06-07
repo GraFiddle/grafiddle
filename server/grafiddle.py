@@ -86,7 +86,15 @@ def fetch_url():
 
     response = urllib.urlopen(request.form['url']).read()
 
-    return response
+    try:
+        decoded = json.loads(response)
+        return json.dumps(decoded, sort_keys=True, indent=4)
+
+    except (ValueError, KeyError, TypeError):
+        return "JSON format error"
+
+
+
 
 @app.errorhandler(404)
 def page_not_found(e):

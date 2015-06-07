@@ -30,47 +30,50 @@
 
 <!-- the chart -->
 <div class="content">
+  <div class="content-left">
     <div class="chartArea" id="chartArea">
-        <!-- angular-chart directive -->
-        <angular-chart
-                class="angularchart"
-                options="checkpoint.options">
-        </angular-chart>
+      <!-- angular-chart directive -->
+      <angular-chart
+        class="angularchart"
+        options="checkpoint.options">
+      </angular-chart>
 
-        <!-- for image rendering -->
-        <canvas id="canvas" style="display: none"></canvas>
+      <!-- for image rendering -->
+      <canvas id="canvas" style="display: none"></canvas>
     </div>
 
-    <div class="showConfig">
-        <button type="button" class="btn btn--big">Show Config</button>
-    </div>
-</div>
-
-
-
-<!-- edit data
-<div class="dataArea">
-    <div style="position: absolute; top: 10px; right: 10px; z-index: 999;">
-        <button class="btn btn-primary" style="opacity: 0.85;" ng-click="toggleDataEditor()">{{switchDataButtonTitle}}</button>
-    </div>
-    <div ng-hide="showDataEditor" class="inputbox">
+    <!-- edit data -->
+    <div class="dataArea">
+      <div style="position: absolute; top: 10px; right: 10px; z-index: 999;">
+        <button class="btn btn-primary" style="opacity: 0.85;" ng-click="toggleDataEditor()">{{switchDataButtonTitle}}
+        </button>
+      </div>
+      <div ng-hide="showDataEditor" class="inputbox">
         <div class="inputrow">
-            Upload a JSON file: <span class="btn btn-file">browse…<input type="file" on-read-file="uploadFile($fileContent)"><br/></span>
+          Upload a JSON file: <span class="btn btn-file">browse…<input type="file"
+                                                                       on-read-file="uploadFile($fileContent)"><br/></span>
         </div>
         <div class="inputrow">
-            Enter URL to JSON data: <input type="text" ng-model="dataURL"> <button class="btn" ng-click="loadfromURL()">Get!</button>
+          Enter URL to JSON data: <input type="text" ng-model="dataURL">
+          <button class="btn" ng-click="loadfromURL()">Get!</button>
         </div>
         <div class="inputrow">
-            Enter JSON data manually in the editor. <button class="btn" ng-click="toggleDataEditor()">Switch to editor</button>
+          Enter JSON data manually in the editor.
+          <button class="btn" ng-click="toggleDataEditor()">Switch to editor</button>
         </div>
+      </div>
+
+      <div ng-show="showDataEditor" ng-model="checkpoint.dataString" ui-ace="aceJsonConfig"></div>
     </div>
+  </div>
+  <div class="content-right">
+    <!-- edit options -->
+    <div class="optionsArea">
+      <div ng-model="checkpoint.optionsString" ui-ace="aceJsonConfig"></div>
+    </div>
+  </div>
 
-    <div ng-show="showDataEditor" ng-model="checkpoint.dataString" ui-ace="aceJsonConfig"></div>
+  <div class="showConfig">
+      <button type="button" class="btn btn--big">Edit Chart</button>
+  </div>
 </div>
- -->
-
-<!-- edit options
-<div class="optionsArea">
-    <div ng-model="checkpoint.optionsString" ui-ace="aceJsonConfig"></div>
-</div>
- -->

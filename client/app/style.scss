@@ -1,8 +1,30 @@
 
+
+/**
+  Colors
+*************************************/
+
+$yellow: #FEC444;
+$red: #FA2070;
+$green: #3DCA6A;
+$blue: #1CACDE;
+$gray: #666666;
+$yellow-light: lighten($yellow, 20%);
+$red-light: lighten($red, 20%);
+$green-light: lighten($green, 20%);
+$blue-light: lighten($blue, 20%);
+$gray-light: lighten($gray, 20%);
+
+
 body {
   margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
 }
 
+h1, h2, h3, h4, h5 {
+  font-family: 'Arvo', serif;
+}
 
 
 
@@ -86,7 +108,6 @@ div.inputbox {
     outline: none;
     cursor: inherit;
     display: block;
-    font-size: 14px;
     font-weight: 400;
     line-height: 1.42857143;
     text-align: center;
@@ -155,40 +176,90 @@ li.embedview {
 
 /// Elements
 
+//.btn {
+//  display: inline-block;
+//  padding: 6px 12px;
+//  margin-bottom: 0;
+//  font-weight: 400;
+//  line-height: 1.42857143;
+//  text-align: center;
+//  white-space: nowrap;
+//  vertical-align: middle;
+//  -ms-touch-action: manipulation;
+//  touch-action: manipulation;
+//  cursor: pointer;
+//  -webkit-user-select: none;
+//  -moz-user-select: none;
+//  -ms-user-select: none;
+//  user-select: none;
+//  background-image: none;
+//  border: 1px solid transparent;
+//  border-radius: 4px;
+//  background-color: #C0C0C0;
+//}
+//
+//.btn-primary {
+//  color: #fff;
+//  background-color: #337ab7;
+//  border-color: #2e6da4;
+//}
+
 .btn {
   display: inline-block;
-  padding: 6px 12px;
-  margin-bottom: 0;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.42857143;
+  position: relative;
+  height: 2em;
+  line-height: 2em;
+  padding: 0 1em;
+  outline: 0;
+  color: $gray-light;
+  background: rgba(0,0,0,0);
   text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
+  text-decoration: none;
   cursor: pointer;
+  border: 1px solid $gray-light;
+  vertical-align: bottom;
+  white-space: nowrap;
+  text-rendering: auto;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  background-color: #C0C0C0;
+  box-sizing: border-box;
+  border-radius: 999em;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-font-feature-settings: "liga" on;
+
+  transition: 100ms background-color,100ms border-color,100ms color;
+}
+.btn:hover {
+  color: $gray;
+  border-color: $gray;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
+.btn--primary {
+  color: $green-light;
+  border-color: $green-light;
 }
+.btn--primary:hover {
+  background: rgba(0,0,0,0);
+  border-color: $green;
+  color: $green;
+}
+
+.btn--big {
+  font-size: 200%;
+}
+
 .input {
   display: inline-block;
   width: 200px;
   height: 34px;
   padding: 6px 12px;
-  font-size: 14px;
   line-height: 1.42857143;
   color: #555;
   background-color: #fff;
@@ -210,9 +281,13 @@ li.embedview {
   float: left;
 }
 
-
-body {
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  padding: 5px;
 }
 
 .header {
@@ -249,7 +324,7 @@ body {
   background-image: url('../images/logo.png');
   background-size: contain;
   height: 40px;
-  width: 79px;
+  width: 40px;
 
   h1 {
     display: inline;
@@ -268,6 +343,31 @@ angularchart {
 
 
 
+/**
+ Layout
+ */
+html, body, .content {
+  height: 100%;
+  margin: 0;
+}
+.content {
+  max-width: 1170px;
+  margin: auto;
+  padding: 1em;
+}
+.chartArea {
+  position: relative;
+  top: 45%;
+  transform: translateY(-50%);
+}
+.showConfig {
+  position: absolute;
+  bottom: 40px;
+  text-align: center;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
 
 
 

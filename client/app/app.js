@@ -9,7 +9,6 @@
       'ngResource',
       'ngSanitize',
       'ui.router',
-      'ui.layout',
       'ui.ace',
       'angularChart'
     ]);

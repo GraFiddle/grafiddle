@@ -133,25 +133,20 @@
                 "data": data,
                 "dimensions": {
                     first: {
-                        "type": "bar",
-                        "color": "green"
+                        "type": "bar"
                     },
                     second: {
-                        "type": "bar",
-                        "color": "orange"
+                        "type": "bar"
                     },
                     third: {
-                        "type": "bar",
-                        "color": "blue"
+                        "type": "bar"
                     },
                     fourth: {
-                        "type": "bar",
-                        "color": "red"
+                        "type": "bar"
                     },
                     line: {
                         "key": "line",
-                        "type": "spline",
-                        "color": "black"
+                        "type": "spline"
                     }
                 },
                 "chart": {
@@ -162,6 +157,9 @@
                     },
                     zoom: {
                         enabled: true
+                    },
+                    color: {
+                        pattern: ['#FEC444', '#FA2070', '#3DCA6A', '#1CACDE', '#666666']
                     }
                 }
             };

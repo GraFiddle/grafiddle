@@ -58,26 +58,13 @@ var app = {
     bases.app + 'app.js',
     bases.app + 'components/user/session/user-session-service.js',
     bases.app + 'components/**/*.js',
-    '!' + bases.app + 'components/**/*_test.js',
-    '!' + bases.app + 'components/**/*_mock.js',
-    '!' + bases.app + 'components/testing/*',
-    '!' + bases.app + 'components/editor/scratchpad-model.js'
+    '!' + bases.app + 'components/**/*_test.js'
   ],
   mocks: [
     bases.app + 'bower_components/angular-mocks/angular-mocks.js',
-
     bases.app + 'components/testing/mock-app.js',
     bases.app + 'components/testing/mock-data.js',
-
     bases.app + 'components/**/*_mock.js',
-    // bases.app + 'components/datasets/datasets-endpoint_mock.js',
-    // bases.app + 'components/units/units-endpoint_mock.js',
-    // bases.app + 'components/views/views-endpoint_mock.js',
-    // bases.app + 'components/user/user-endpoint_mock.js',
-    // bases.app + 'components/user/user-endpoint_mock.js',
-    // bases.app + 'components/processors/processors-endpoint_mock.js',
-    // bases.app + 'components/workflows/workflows-endpoint_mock.js',
-
     bases.app + 'components/testing/mock-pass.js'
   ],
   scss: bases.app + scssMain,
@@ -93,7 +80,7 @@ var app = {
   index: bases.app + 'index.html',
   images: bases.app + 'components/**/*.{png,jpg,jpeg,gif,svg,ico}',
   views: bases.app + 'components/**/*.html',
-  statics: ['app/.htaccess', 'app/favicon.ico', 'app/robots.txt', bases.app + 'bower_components/ace-builds/src-noconflict/worker-json.js']
+  statics: ['app/.htaccess', 'app/favicon*', 'app/robots.txt', bases.app + 'bower_components/ace-builds/src-noconflict/worker-json.js']
 };
 
 var dist = {
@@ -194,7 +181,7 @@ gulp.task('mockScripts', function() {
 
 // STYLESHEETS PROCESSING
 //
-gulp.task('compass', ['images'], function() {
+gulp.task('compass', function() {
   var environment = 'development';
   if (production) {
     environment = 'production';
@@ -440,8 +427,8 @@ function enableMock() {
 // gulp clean
 // remove build (erase dist/ folder recursively)
 //
-gulp.task('clean', function() {
-  del([bases.dist]);
+gulp.task('clean', function(done) {
+  del([bases.dist], done);
 });
 
 // gulp build [:mock]

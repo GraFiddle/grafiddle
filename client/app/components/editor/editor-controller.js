@@ -140,6 +140,9 @@
       var options = {
         "data": data,
         "dimensions": {
+          day: {
+            axis: "x"
+          },
           first: {
             "type": "bar"
           },

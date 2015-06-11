@@ -93,7 +93,6 @@ var testingPort = 9001;
 // DEFAULT TASK CONFIGURATION
 // (be careful to edit defaults; will be set by higher level tasks to propagate to lower levels)
 //
-var includeMock = false;
 var appName = 'grafiddle';
 
 
@@ -233,9 +232,9 @@ function injectIndex() {
     read: false
   };
 
-  var jsFiles = ['js/vendor.js', 'js/config.js', 'js/partials.js', 'js/scripts.js', 'js/' + mockFile];
+  var jsFiles = ['js/vendor.js', 'js/config.js', 'js/partials.js', 'js/scripts.js'];
   if (production) {
-    jsFiles = ['js/vendor.min.js', 'js/config.js', 'js/partials.min.js', 'js/scripts.min.js', 'js/' + mockFile];
+    jsFiles = ['js/vendor.min.js', 'js/config.js', 'js/partials.min.js', 'js/scripts.min.js'];
   }
 
   // use relative paths with dist as base; remove the prepended '../dist' in the path
@@ -382,18 +381,12 @@ gulp.task('protractor', function(done) {
       done();
     }).on('end', done);
 });
-gulp.task('e2e:singleRun', ['build:mock', 'connect', 'protractor'], function() {
+gulp.task('e2e:singleRun', ['connect', 'protractor'], function() {
   gulp.src(bases.dist)
     .pipe(connect.serverClose());
   gulp.src(bases.dist)
     .pipe(exit());
 });
-
-
-function enableMock() {
-  includeMock = true;
-  appName = 'onedataMock';
-}
 
 
 // gulp clean
@@ -403,24 +396,16 @@ gulp.task('clean', function(done) {
   del([bases.dist], done);
 });
 
-// gulp build [:mock]
-// build project in dist/ folder (with optional mock argument)
+// gulp build
+// build project in dist/ folder
 //
 gulp.task('build', ['images', 'index', 'fonts', 'partials', 'statics']);
-gulp.task('build:mock', function() {
-  enableMock();
-  gulp.start(['build']);
-});
 
 
-// gulp [mock]
-// build project in dist/ folder, serve it, open browser and reload on file changes (with optional mock argument)
+// gulp
+// build project in dist/ folder, serve it, open browser and reload on file changes
 //
 gulp.task('default', ['watch', 'connect', 'open']);
-gulp.task('mock', function() {
-  enableMock();
-  gulp.start(['default']);
-});
 
 // gulp test [:all, :watch]
 // run unit tests on source code
@@ -438,7 +423,7 @@ gulp.task('test:watch', function() {
 });
 
 // gulp e2e
-// run end to end tests on the mocked build
+// run end to end tests
 //
 gulp.task('e2e', function() {
   port = testingPort;

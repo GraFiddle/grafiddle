@@ -43,13 +43,11 @@ var argv = require('yargs').argv,
 //
 var production = !!(argv.production); // true if --production flag is used
 
-var scssMain = 'style.scss';
-
 // BASES AND PATHS
 //
 var bases = {
-  app: 'app/',
-  dist: '../server/static/'
+  app: 'client/',
+  dist: 'server/static/'
 };
 
 var app = {
@@ -60,20 +58,23 @@ var app = {
     bases.app + 'components/**/*.js',
     '!' + bases.app + 'components/**/*_test.js'
   ],
-  scss: bases.app + scssMain,
-  scssAll: [bases.app + scssMain, bases.app + 'components/**/*.scss'],
+  scss: bases.app + 'style.scss',
+  scssAll: [bases.app + 'style.scss', bases.app + 'components/**/*.scss'],
   alljs: [
     bases.app + 'app.js',
     bases.app + 'components/**/*.js',
-    'e2e/**/*.js',
     'gulpfile.js',
-    'karma.conf.js',
-    'protractor.conf.js'
+    'karma.conf.js'
   ],
   index: bases.app + 'index.html',
   images: bases.app + 'components/**/*.{png,jpg,jpeg,gif,svg,ico}',
   views: bases.app + 'components/**/*.html',
-  statics: ['app/.htaccess', 'app/favicon*', 'app/robots.txt', bases.app + 'bower_components/ace-builds/src-noconflict/worker-json.js']
+  statics: [
+    bases.app + 'app/.htaccess',
+    bases.app + 'app/favicon*',
+    bases.app + 'app/robots.txt',
+    bases.app + 'bower_components/ace-builds/src-noconflict/worker-json.js'
+  ]
 };
 
 var dist = {
@@ -162,7 +163,7 @@ gulp.task('compass', function() {
   return gulp.src(app.scss)
     .pipe(compass({
       project: __dirname,
-      sass: 'app/',
+      sass: bases.app,
       css: dist.css,
       environment: environment,
       sourcemap: true,

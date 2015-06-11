@@ -1,4 +1,20 @@
 logs/*
 !.gitkeep
 .DS_Store
+
+Project files of JetBrains IDEs
 .idea
+*.iml
+
+# node packages
+node_modules
+
+# bower components
+client/bower_components
+
+# temporary files produced during build
+.tmp
+.sass-cache
+
+# dist folder
+server/static

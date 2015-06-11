@@ -60,13 +60,6 @@ var app = {
     bases.app + 'components/**/*.js',
     '!' + bases.app + 'components/**/*_test.js'
   ],
-  mocks: [
-    bases.app + 'bower_components/angular-mocks/angular-mocks.js',
-    bases.app + 'components/testing/mock-app.js',
-    bases.app + 'components/testing/mock-data.js',
-    bases.app + 'components/**/*_mock.js',
-    bases.app + 'components/testing/mock-pass.js'
-  ],
   scss: bases.app + scssMain,
   scssAll: [bases.app + scssMain, bases.app + 'components/**/*.scss'],
   alljs: [
@@ -89,8 +82,6 @@ var dist = {
   fonts: bases.dist + 'fonts/',
   images: bases.dist + 'images/'
 };
-
-var mockFile = 'mocks.js';
 
 var sourcemaps_path = '.';
 
@@ -156,24 +147,6 @@ gulp.task('vendorScripts', ['bower:install', 'bower:prune'], function() {
     .pipe(newer(dist.js + vendorFile))
     .pipe(concat(vendorFile))
     .pipe(gulpif(production, uglify()))
-    .pipe(sourcemaps.write(sourcemaps_path))
-    .pipe(gulp.dest(dist.js));
-});
-
-gulp.task('mockScripts', function() {
-  if (!includeMock) {
-    del([dist.js + mockFile]);
-    return;
-  }
-
-  return gulp.src(app.mocks)
-    .pipe(sourcemaps.init())
-    .pipe(cached('mockScriptsCache'))
-    .pipe(plumber())
-    .on('error', gutil.log)
-    .pipe(ngAnnotate())
-    .pipe(remember('mockScriptsCache'))
-    .pipe(concat(mockFile))
     .pipe(sourcemaps.write(sourcemaps_path))
     .pipe(gulp.dest(dist.js));
 });
@@ -285,7 +258,7 @@ function injectIndex() {
 gulp.task('injectIndex', injectIndex);
 
 // use this for building
-gulp.task('index', ['compass', 'config', 'scripts', 'mockScripts', 'vendorScripts', 'vendorStyles'], injectIndex);
+gulp.task('index', ['compass', 'config', 'scripts', 'vendorScripts', 'vendorStyles'], injectIndex);
 
 // IMAGES PROCESSING
 //
@@ -331,7 +304,6 @@ gulp.task('watch', ['build'], function() {
   gulp.watch(app.scssAll, ['compass']);
   gulp.watch(app.config, ['config']);
   gulp.watch(app.js, ['scripts']);
-  gulp.watch(app.mocks, ['mockScripts']);
   // watch any change in dist folder; reload immediately in case of detected change
   gulp.watch(bases.dist + '**', ['reload']);
 });

@@ -70,9 +70,9 @@ var app = {
   images: bases.app + 'components/**/*.{png,jpg,jpeg,gif,svg,ico}',
   views: bases.app + 'components/**/*.html',
   statics: [
-    bases.app + 'app/.htaccess',
-    bases.app + 'app/favicon*',
-    bases.app + 'app/robots.txt',
+    bases.app + '.htaccess',
+    bases.app + 'favicon*',
+    bases.app + 'robots.txt',
     bases.app + 'bower_components/ace-builds/src-noconflict/worker-json.js'
   ]
 };

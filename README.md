@@ -4,7 +4,6 @@ Share and collaborate on visualizations using [graFiddle.it](http:grafiddle.it)
 
 ## Setup
 
- * `$ cd client`
  * `$ npm install`
  * `$ bower install`
  * `$ sudo gem install compass`
@@ -12,7 +11,6 @@ Share and collaborate on visualizations using [graFiddle.it](http:grafiddle.it)
 
 ## Build
 
- * `$ cd client`
  * `$ gulp build`
 
 ## Deploy

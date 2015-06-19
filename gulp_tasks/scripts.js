@@ -5,16 +5,13 @@ var gulp = require('gulp'),
   ngAnnotate = require('gulp-ng-annotate'),
   ngFilesort = require('gulp-angular-filesort'),
   concat = require('gulp-concat'),
-  gulpif = require('gulp-if'),
   uglify = require('gulp-uglify'),
   config = require('../gulp_config');
 
 
+var scriptsFile = 'scripts.js';
+
 gulp.task('scripts', function() {
-  var scriptsFile = 'scripts.js';
-  if (config.production) {
-    scriptsFile = 'scripts.min.js';
-  }
   return gulp.src(config.app.js)
     .pipe(sourceMaps.init())
     .pipe(cached('scriptsCache'))
@@ -22,7 +19,7 @@ gulp.task('scripts', function() {
     .pipe(ngFilesort())
     .pipe(remember('scriptsCache'))
     .pipe(concat(scriptsFile))
-    .pipe(gulpif(config.production, uglify()))
+    .pipe(uglify())
     .pipe(sourceMaps.write(config.sourceMapsPath))
     .pipe(gulp.dest(config.dist.js));
 });

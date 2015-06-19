@@ -3,18 +3,13 @@ var gulp = require('gulp'),
   config = require('../gulp_config');
 
 
-var environment = 'development';
-
 gulp.task('compass', function() {
-  if (config.production) {
-    environment = 'production';
-  }
   return gulp.src(config.app.scss)
     .pipe(compass({
       project: config.dirname,
       sass: config.bases.app,
       css: config.dist.css,
-      environment: environment,
+      environment: 'production',
       sourcemap: true,
       debug: false,
       logging: false

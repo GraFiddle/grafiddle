@@ -14,9 +14,6 @@ var jsFilter = {
 };
 
 gulp.task('vendorScripts', ['bower:install', 'bower:prune'], function() {
-  if (config.production) {
-    vendorFile = 'vendor.min.js';
-  }
   return gulp.src(bowerFiles(jsFilter))
     .pipe(sourceMaps.init())
     .pipe(newer(config.dist.js + vendorFile))

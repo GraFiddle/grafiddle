@@ -13,9 +13,6 @@ function injectIndex() {
   };
 
   var jsFiles = ['js/vendor.js', 'js/config.js', 'js/partials.js', 'js/scripts.js'];
-  if (config.production) {
-    jsFiles = ['js/vendor.min.js', 'js/config.js', 'js/partials.min.js', 'js/scripts.min.js'];
-  }
 
   // use relative paths with dist as base; remove the prepended '../dist' in the path
   var injectOptions = {

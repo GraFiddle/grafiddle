@@ -49,8 +49,6 @@ var dist = {
   images: bases.dist + 'images/'
 };
 
-var sourceMapsPath = '.';
-
 // SERVING CONFIG
 //
 var port = 8000;
@@ -62,7 +60,7 @@ module.exports = {
   bases: bases,
   app: app,
   dist: dist,
-  sourceMapsPath: sourceMapsPath,
+  sourceMapsPath: '.', // place sourcemap file next to the transpiled file
   dirname: __dirname,
   port: port,
   testingPort: testingPort,

@@ -4,23 +4,23 @@ var gulp = require('gulp'),
   runSequence = require('run-sequence');
 
 
-require('./gulp_tasks/clean');
-require('./gulp_tasks/bower');
-require('./gulp_tasks/configScripts');
-require('./gulp_tasks/scripts');
-require('./gulp_tasks/vendorScripts');
-require('./gulp_tasks/compass');
-require('./gulp_tasks/vendorStyles');
-require('./gulp_tasks/fonts');
-require('./gulp_tasks/partials');
-require('./gulp_tasks/images');
-require('./gulp_tasks/index');
-require('./gulp_tasks/statics');
-require('./gulp_tasks/connect');
-require('./gulp_tasks/reload');
-require('./gulp_tasks/open');
-require('./gulp_tasks/watch');
-require('./gulp_tasks/jshint');
+require('./gulp-modular/tasks/clean');
+require('./gulp-modular/tasks/bower');
+require('./gulp-modular/tasks/configScripts');
+require('./gulp-modular/tasks/scripts');
+require('./gulp-modular/tasks/vendorScripts');
+require('./gulp-modular/tasks/compass');
+require('./gulp-modular/tasks/vendorStyles');
+require('./gulp-modular/tasks/fonts');
+require('./gulp-modular/tasks/partials');
+require('./gulp-modular/tasks/images');
+require('./gulp-modular/tasks/index');
+require('./gulp-modular/tasks/statics');
+require('./gulp-modular/tasks/connect');
+require('./gulp-modular/tasks/reload');
+require('./gulp-modular/tasks/open');
+require('./gulp-modular/tasks/watch');
+require('./gulp-modular/tasks/jshint');
 
 
 // gulp build

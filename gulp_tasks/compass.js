@@ -3,8 +3,8 @@ var gulp = require('gulp'),
   config = require('../gulp_config');
 
 
-gulp.task('compass', function() {
-  return gulp.src(config.app.scss)
+gulp.task('compass', function(done) {
+  gulp.src(config.app.scss)
     .pipe(compass({
       project: config.dirname,
       sass: config.bases.app,
@@ -14,4 +14,5 @@ gulp.task('compass', function() {
       debug: false,
       logging: false
     }));
+  done();
 });

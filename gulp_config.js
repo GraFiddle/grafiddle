@@ -58,6 +58,8 @@ var testingPort = 9001;
 module.exports = {
   production: production,
   bases: bases,
+  debug: false,
+  bowerjson: 'bower.json',
   app: app,
   dist: dist,
   sourceMapsPath: '.', // place sourcemap file next to the transpiled file

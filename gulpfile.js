@@ -1,40 +1,99 @@
 'use strict';
 
-var gulp = require('gulp'),
-  runSequence = require('run-sequence');
+var argv = require('yargs').argv;
+var gulp = require('gulp');
+var modular = require('gulp-modular');
 
+// gulp-modular tasks
+var tasks = [
+  'bower',
+  'clean',
+  'compass',
+  'configScripts',
+  'connect',
+  'fonts',
+  'images',
+  'index',
+  'jshint',
+  'open',
+  'partials',
+  'reload',
+  'scripts',
+  'statics',
+  'vendorScripts',
+  'vendorStyles',
+  'watch'
+];
 
-require('./gulp-modular/tasks/clean');
-require('./gulp-modular/tasks/bower');
-require('./gulp-modular/tasks/configScripts');
-require('./gulp-modular/tasks/scripts');
-require('./gulp-modular/tasks/vendorScripts');
-require('./gulp-modular/tasks/compass');
-require('./gulp-modular/tasks/vendorStyles');
-require('./gulp-modular/tasks/fonts');
-require('./gulp-modular/tasks/partials');
-require('./gulp-modular/tasks/images');
-require('./gulp-modular/tasks/index');
-require('./gulp-modular/tasks/statics');
-require('./gulp-modular/tasks/connect');
-require('./gulp-modular/tasks/reload');
-require('./gulp-modular/tasks/open');
-require('./gulp-modular/tasks/watch');
-require('./gulp-modular/tasks/jshint');
+// PRODUCTION FLAG (--production)
+var production = !!(argv.production); // true if --production flag is used
 
+// ANGULAR MODULE NAMES
+var appName      = 'grafiddle';
+var configName   = 'grafiddle.config';
+var templateName = 'grafiddle.templates';
 
-// gulp build
-// build project in dist folder
+// BASES AND PATHS
+var bases = {
+  app: 'client/',
+  dist: 'server/static/'
+};
+
+var app = {
+  config: bases.app + 'config.json',
+  js: [
+    bases.app + 'app.js',
+    bases.app + 'components/**/*.js',
+    '!' + bases.app + 'components/**/*_test.js'
+  ],
+  scss: bases.app + 'style.scss',
+  scssAll: [bases.app + 'style.scss', bases.app + 'components/**/*.scss'],
+  alljs: [
+    bases.app + 'app.js',
+    bases.app + 'components/**/*.js',
+    'gulpfile.js',
+    'karma.conf.js'
+  ],
+  index: bases.app + 'index.html',
+  images: bases.app + 'components/**/*.{png,jpg,jpeg,gif,svg,ico}',
+  views: bases.app + 'components/**/*.html',
+  statics: [
+    bases.app + '.htaccess',
+    bases.app + 'favicon*',
+    bases.app + 'robots.txt',
+    bases.app + 'bower_components/ace-builds/src-noconflict/worker-json.js'
+  ]
+};
+
+var dist = {
+  js: bases.dist + 'js/',
+  css: bases.dist + 'css/',
+  fonts: bases.dist + 'fonts/',
+  images: bases.dist + 'images/'
+};
+
+// SERVING CONFIG
+var port = 8000;
+var testingPort = 9001;
+
+var config = {
+  production: production,
+  bases: bases,
+  debug: false,
+  bowerjson: 'bower.json',
+  app: app,
+  dist: dist,
+  sourceMapsPath: '.', // place sourcemap file next to the transpiled file
+  dirname: __dirname,
+  port: port,
+  testingPort: testingPort,
+  appName: appName,
+  configName: configName,
+  templateName: templateName
+};
+
+modular(gulp, tasks, config);
+
 gulp.task('build', ['images', 'index', 'fonts', 'partials', 'statics']);
 
-
-// gulp
-// build project in dist folder, serve it, open browser and reload on file changes
 gulp.task('default', ['watch', 'connect', 'open']);
-
-
-// gulp all
-// runs all kinds of checks
-gulp.task('all', function() {
-  runSequence('jshint', 'test:all', 'e2e');
-});

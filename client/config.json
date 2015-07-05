@@ -1,6 +1,0 @@
-{
-  "ENV": {
-    "name": "production",
-    "api": "http://grafiddle.it/"
-  }
-}

@@ -8,10 +8,9 @@ var modular = require('gulp-modular');
 var tasks = [
   'bower',
   'clean',
-  'compass',
+  'sass',
   'configScripts',
   'connect',
-  'fonts',
   'images',
   'index',
   'jshint',
@@ -20,13 +19,40 @@ var tasks = [
   'reload',
   'scripts',
   'statics',
+  'vendorFonts',
   'vendorScripts',
   'vendorStyles',
   'watch'
 ];
 
-// PRODUCTION FLAG (--production)
-var production = !!(argv.production); // true if --production flag is used
+var environments = {
+  development: {
+    rev: false,
+    constants: {
+      ENV: {
+        name: 'development',
+        api: 'http://grafiddle.it/'
+      }
+    }
+  },
+  production: {
+    rev: true,
+    constants: {
+      ENV: {
+        name: 'production',
+        api: 'http://grafiddle.it/'
+      }
+    }
+  }
+};
+
+// ENVIRONMENT FLAG
+var env = environments.development;
+for (var index in environments) {
+  if (!!argv[index]) {
+    env = environments[index];
+  }
+}
 
 // ANGULAR MODULE NAMES
 var appName      = 'grafiddle';
@@ -40,7 +66,6 @@ var bases = {
 };
 
 var app = {
-  config: bases.app + 'config.json',
   js: [
     bases.app + 'app.js',
     bases.app + 'components/**/*.js',
@@ -77,7 +102,7 @@ var port = 8000;
 var testingPort = 9001;
 
 var config = {
-  production: production,
+  env: env,
   bases: bases,
   debug: false,
   bowerjson: 'bower.json',
@@ -94,6 +119,6 @@ var config = {
 
 modular(gulp, tasks, config);
 
-gulp.task('build', ['images', 'index', 'fonts', 'partials', 'statics']);
+gulp.task('build', ['images', 'index', 'vendorFonts', 'partials', 'statics']);
 
 gulp.task('default', ['watch', 'connect', 'open']);

@@ -8,6 +8,7 @@ var modular = require('gulp-modular');
 var tasks = [
   'bower',
   'clean',
+  'fonts',
   'sass',
   'configScripts',
   'connect',
@@ -80,6 +81,7 @@ var app = {
     'karma.conf.js'
   ],
   index: bases.app + 'index.html',
+  fonts: bases.app + 'fonts/*',
   images: bases.app + 'components/**/*.{png,jpg,jpeg,gif,svg,ico}',
   views: bases.app + 'components/**/*.html',
   statics: [
@@ -119,6 +121,6 @@ var config = {
 
 modular(gulp, tasks, config);
 
-gulp.task('build', ['images', 'index', 'vendorFonts', 'partials', 'statics']);
+gulp.task('build', ['images', 'index', 'vendorFonts', 'statics']);
 
 gulp.task('default', ['watch', 'connect', 'open']);

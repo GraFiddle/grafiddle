@@ -11,7 +11,7 @@ var tasks = [
   'fonts',
   'sass',
   'configScripts',
-  'connect',
+  'browserSync',
   'images',
   'index',
   'jshint',
@@ -20,9 +20,9 @@ var tasks = [
   'reload',
   'scripts',
   'statics',
-  'vendorFonts',
-  'vendorScripts',
-  'vendorStyles',
+  'bowerFonts',
+  'bowerScripts',
+  'bowerStyles',
   'watch'
 ];
 
@@ -121,6 +121,6 @@ var config = {
 
 modular(gulp, tasks, config);
 
-gulp.task('build', ['images', 'index', 'vendorFonts', 'statics']);
+gulp.task('build', ['images', 'index', 'bowerFonts', 'statics']);
 
-gulp.task('default', ['watch', 'connect', 'open']);
+gulp.task('default', ['watch', 'browserSync', 'open']);
